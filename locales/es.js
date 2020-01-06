@@ -283,6 +283,7 @@ export default {
     SOPORTE_T: 'SOPORTE TÉCNICO',
     SI: 'SI',
     SALTAR: 'saltar presentacion',
+    SELECT:"Selecciona",
     SELECCIONE: 'Seleccione un nivel de estrellas y si lo desea añada algún comentario que sirva de referencia para otros usuarios.',
     SERVICIO: 'Para mejorar nuestro servicio sería de mucha ayuda la valoración de',
     SERVICIO2: 'y el servicio recibido en el traslado',

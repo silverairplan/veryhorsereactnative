@@ -4,6 +4,7 @@ import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native
 import PageService from '../service/service';
 import HTML from 'react-native-render-html';
 import PageContainer from '../components/PageContainer';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class StaticPage extends React.Component
 {
@@ -14,7 +15,8 @@ class StaticPage extends React.Component
             page:{
                 title:'',
                 descr:''
-            }
+            },
+            load:true
         }
     }
 
@@ -26,7 +28,8 @@ class StaticPage extends React.Component
             let self = this;
             pageservice.getstaticpage(this.props.navigation.state.params.page).then(page=>{
                 self.setState({
-                    page:page.page
+                    page:page.page,
+                    load:false
                 })
             })
         }
@@ -38,6 +41,7 @@ class StaticPage extends React.Component
     {
         return (
             <PageContainer {...this.props} backenable={true} back="Info">
+                <Spinner visible={this.state.load} textContent="Loading ..." textStyle={{color:'white'}}></Spinner>
                 <View style={style.container}>
                     <View>
                         <HTML baseFontStyle={style.contenttitle} html={this.state.page.title}></HTML>

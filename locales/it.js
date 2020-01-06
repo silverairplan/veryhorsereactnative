@@ -17,6 +17,7 @@ export default {
 	CERTIFICADO_GARANTIA: 'Certificato di garanzia',
 	COMENZAR: 'Iniziare',
 	DIRECCION: 'Indirizzo',
+	SELECT:"Selezionare",
 	DIRECCION_RECOGIDA: 'Città di raccolta',
 	DESESTIMAR: 'Rifiuta richiesta',
 	DESESTIMAR_QUOTE:"Respingere citazione",

@@ -50,13 +50,13 @@ class AutoComplete extends React.Component
             }
         }  
         
-        console.log(countries);
         this.props.selectchange(countries);
     }
 
     render()
     {
         let self = this;
+        const {intlData} = this.props;
         return (
             <View style={style.container}>
                 <View style={{flexDirection:'row',flexWrap:'wrap'}}>
@@ -71,7 +71,7 @@ class AutoComplete extends React.Component
                         })
                     }
                 </View>
-                <Multiple styleSelectorContainer={style.input} hideTags uniqueKey="nombre" displayKey="nombre" tagRemoveIconColor="white" items={this.state.countries} selectedItems={this.props.value}  onSelectedItemsChange={(value)=>this.selectchange(value)}></Multiple>
+                <Multiple styleSelectorContainer={style.input} hideTags={true} uniqueKey="nombre" displayKey="nombre" tagRemoveIconColor="white" items={this.state.countries} selectedItems={this.props.value}  onSelectedItemsChange={(value)=>this.selectchange(value)} selectText={intlData.messages['SELECT']} ></Multiple>
             </View>
         )
     }

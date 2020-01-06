@@ -62,6 +62,8 @@ class RegisterCarrier extends React.Component
                     {
                         alert(intlData.messages['REGISTRO_E']);
                         self.props.navigation.navigate('Intro');
+                        AsyncStorage.setItem("lang",self.state.user.idioma);
+                        updateLanguage(self.state.user.idioma);
                         self.setState({
                             creatinguser:false
                         })

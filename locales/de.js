@@ -225,6 +225,7 @@ export default {
 	REQUIRED_VEHICLE: 'Erforderliches Fahrzeug',
 	QUE_DESEA_HACER: 'Was möchtest du tun?',
 	SOPORTE_T: 'TECHNISCHE UNTERSTÜTZUNG',
+	SELECT:"wählen",
 	SALTAR: 'Präsentation überspringen',
 	SELECCIONE: 'Wählen Sie eine Stufe von Sternen und fügen Sie auf Wunsch Kommentare hinzu, um sich auf andere Benutzer zu beziehen.',
 	SERVICIO: 'Um unseren Service zu verbessern, würden wir uns sehr über Ihre Bewertung von',

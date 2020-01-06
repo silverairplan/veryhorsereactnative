@@ -168,10 +168,27 @@ class MyProfile extends React.Component
     render()
     {
         const {intlData} = this.props;
-        let countrycode = this.state.countries;
-        countrycode.sort(function(a,b){
-            return a > b?1:-1;
+        let countrycode = [];
+        this.state.countries.map(function(row){
+            if(row.phone_code)
+            {
+                countrycode.push(row.phone_code);
+            }
+            
         })
+
+        countrycode.sort(function(a,b){
+            if(a.split)
+            {
+                a = a.split(' ').join('');
+            }
+
+            if(b.split)
+            {
+                b = b.split(' ').join('');
+            }
+            return a>b?1:-1
+        });
         return (
             <PageContainer {...this.props} bannerenable={true} padding={true}>
                 <View style={style.container}>
@@ -354,7 +371,7 @@ class MyProfile extends React.Component
                                             </View>
                                             <View style={style.formgroup}>
                                                 <Text style={style.label}>{intlData.messages['AREA_T']}</Text>
-                                                <AutoComplete value={this.state.user.paises?this.state.user.paises:[]} selectchange = {(value)=>this.handleChange("paises",value)} remove={this.remove}></AutoComplete>
+                                                <AutoComplete value={this.state.user.paises?this.state.user.paises:[]} selectchange = {(value)=>this.handleChange("paises",value)} remove={this.remove} intlData={intlData}></AutoComplete>
                                             </View> 
                                         </View>
                                     )
@@ -368,7 +385,7 @@ class MyProfile extends React.Component
                                                 {
                                                     countrycode.map((row,index)=>{
                                                         return (
-                                                            <Picker.Item key={index} label={'+' + row.phone_code} value={'+' + row.phone_code}></Picker.Item>
+                                                            <Picker.Item key={index} label={'+' + row} value={'+' + row}></Picker.Item>
                                                         )
                                                     })
                                                 }
@@ -394,7 +411,7 @@ class MyProfile extends React.Component
                                                 {
                                                     countrycode.map((row,index)=>{
                                                         return (
-                                                            <Picker.Item key={index} label={'+' + row.phone_code} value={'+' + row.phone_code}></Picker.Item>
+                                                            <Picker.Item key={index} label={'+' + row} value={'+' + row}></Picker.Item>
                                                         )
                                                     })
                                                 }

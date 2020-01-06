@@ -72,6 +72,7 @@ export default {
 	SALIR: 'Sortie',
     SENT: 'Envoyée',
 	SIGUIENTE: 'Suivant',
+	SELECT:"sélectionner",
 	SI: 'Oui',
 	TRANSPORTE: 'Un transport de qualité',
 	TRASLADO: 'Demandes de transfert',

@@ -29,6 +29,7 @@ export default {
 	ENVIAR_AMIGO: 'Naar een vriend(in) sturen',
 	ENVIAR_COTIZACION: 'Offerte versturen',
 	EMAIL: 'e-mail',
+	SELECT:"kiezen",
 	ENVIAR2: 'Verzenden',
 	ENVIAR_DEMANDA: 'Aanvraag verzenden',
 	EMAIL_MI_AMIGO: 'De e-mail van mijn vriend(in)',

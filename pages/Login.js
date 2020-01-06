@@ -4,7 +4,6 @@ import connect from '../components/connectedcomponent';
 import PageContainer from '../components/PageContainer';
 import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import UserService from '../service/userservice';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 class Login extends React.Component
 {
     constructor(props)
@@ -23,7 +22,7 @@ class Login extends React.Component
 
     login = () => {
         let userservice = new UserService();
-        const {intlData} = this.props;
+        const {intlData,updateLanguage} = this.props;
         
         if(this.validate())
         {
@@ -36,6 +35,8 @@ class Login extends React.Component
                 {
                     
                     self.props.navigation.navigate('Intro');
+                    AsyncStorage.setItem("lang",data.lang);
+                    updateLanguage(data.lang);
                     self.setState({error:false,loging:false});
                 }
                 else

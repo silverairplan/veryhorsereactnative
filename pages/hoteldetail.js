@@ -63,6 +63,9 @@ class HotelDetail extends React.Component
         }
     }
 
+    isset = (text) => {
+        return text?true:false;
+    }
     render()
     {
         const {intlData} = this.props;
@@ -104,42 +107,42 @@ class HotelDetail extends React.Component
                         <View style={style.desc_content}>
                             <View style={style.buttoncontainer}>
                                 {
-                                    this.state.hoteldetail.email != undefined && (
+                                    this.isset(this.state.hoteldetail.email) && (
                                         <TouchableOpacity style={style.button} onPress={()=>Linking.openURL("mailto:" + this.state.hoteldetail.email)}>
                                             <Image source={require('../assets/imgs/icons/icon_email.png')} style={style.button}></Image>
                                         </TouchableOpacity>
                                     )
                                 }
                                 {
-                                    this.state.hoteldetail.web != undefined && (
+                                    this.isset(this.state.hoteldetail.web) && (
                                         <TouchableOpacity style={style.button} onPress={()=>Linking.openURL(this.state.hoteldetail.web)}>
                                             <Image source={require('../assets/imgs/icons/icon_web.png')} style={style.button}></Image>
                                         </TouchableOpacity>
                                     )
                                 }
                                 {
-                                    this.state.hoteldetail.facebook != undefined && (
+                                    this.isset(this.state.hoteldetail.facebook) && (
                                         <TouchableOpacity style={style.button} onPress={()=>Linking.openURL(this.state.hoteldetail.facebook)}>
                                             <Image source={require('../assets/imgs/icons/icon_facebook.png')} style={style.button}></Image>
                                         </TouchableOpacity>
                                     )
                                 }
                                 {
-                                    this.state.hoteldetail.whatsapp != undefined && (
+                                    this.isset(this.state.hoteldetail.whatsapp) && (
                                         <TouchableOpacity style={style.button} onPress={()=>Linking.openURL(this.state.hoteldetail.whatsapp)}>
                                             <Image source={require('../assets/imgs/icons/icon_whatsapp.png')} style={style.button}></Image>
                                         </TouchableOpacity>
                                     )
                                 }
                                 {
-                                    (this.state.hoteldetail.prefix_fix != undefined && this.state.hoteldetail.phone_fix != undefined) && (
+                                    (this.isset(this.state.hoteldetail.prefix_fix) && this.isset(this.state.hoteldetail.phone_fix)) && (
                                         <TouchableOpacity style={style.button} onPress={()=>this.callphone(this.state.hoteldetail.prefix_fix,this.state.hoteldetail.phone_fix)}>
                                             <Image source={require('../assets/imgs/icons/icon_phone.png')} style={style.button}></Image>
                                         </TouchableOpacity>
                                     )
                                 }
                                 {
-                                    (this.state.hoteldetail.prefix_mob != undefined && this.state.hoteldetail.phone_mob != undefined) && (
+                                    this.isset(this.state.hoteldetail.prefix_mob) && (
                                         <TouchableOpacity style={style.button} onPress={()=>this.callphone(this.state.hoteldetail.prefix_mob,this.state.hoteldetail.phone_mob)}>
                                             <Image source={require('../assets/imgs/icons/icon_mobile.png')} style={style.button}></Image>
                                         </TouchableOpacity>

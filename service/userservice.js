@@ -15,7 +15,7 @@ export default class UserService
                 loggedin.uid = user.user.uid;
                 
                 AsyncStorage.setItem("user",JSON.stringify(loggedin));
-                callback({success:true});
+                callback({success:true,lang:loggedin.idioma});
             })
             
         }).catch(error=>{

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,StyleSheet,Image,TextInput,TouchableOpacity,Text} from 'react-native';
+import {View,StyleSheet,Image,TextInput,TouchableOpacity,Text, AsyncStorage} from 'react-native';
 import connect from '../components/connectedcomponent';
 import PageContainer from '../components/PageContainer';
 import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -46,7 +46,7 @@ class RegisterForm extends React.Component
     }
 
     nextstep = () => {
-        const {intlData} = this.props;
+        const {intlData,updateLanguage} = this.props;
         if(this.validate(this.state.step) && !this.state.creatinguser)
         {
             if(this.state.step == 3)
@@ -61,6 +61,8 @@ class RegisterForm extends React.Component
                     {
                         alert(intlData.messages['REGISTRO_E']);
                         self.props.navigation.navigate('Intro');
+                        AsyncStorage.setItem("lang",self.state.user.idioma);
+                        updateLanguage(self.state.user.idioma);
                         self.setState({
                             creatinguser:false
                         })

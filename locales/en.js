@@ -19,7 +19,7 @@ export default {
 	ASK_CARRIER:"Ask The Carrier",
 	Send_Consult:"Send Consult",
     BIENVENIDO: 'Welcome to Very Horse, your request is being processed by our verification department. You will receive a confirmation email once it is validated',
-
+    SELECT:"Select",
     CANCELAR: 'Cancel',
     CONTACTO: 'Contact',
     CONTACTO_30MIN: 'If we have not contacted you within the next 30 minutes, please call',
