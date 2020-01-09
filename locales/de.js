@@ -235,6 +235,7 @@ export default {
 	SEDE: 'Hauptsitz',
 	SERVICES: 'Dienstleistungen',
 	SHOW_ROUTE: 'Route anzeigen',
+	Route:"Route",
 	TERMINOS_USO_POLITICA: 'NUTZUNGSBEDINGUNGEN UND DATENSCHUTZERKLÄRUNG',
 	TRASPORTISTA: 'Spediteure',
 	OWNER:"Besitzer",

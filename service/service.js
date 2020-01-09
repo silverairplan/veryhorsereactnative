@@ -290,13 +290,14 @@ export default class Service
                 var myToday = new Date();
                 var today = +(new Date(myToday.getFullYear(), myToday.getMonth(), myToday.getDate(), 0, 0, 0));
                 var transporterId = user.uid;
-                firebase.database().ref("/demandas/").orderByChild("pickDayIni").startAt(today).on("value",snapshot=>{
+                firebase.database().ref("/demandas/").orderByChild("pickDayEnd").startAt(today).on("value",async(snapshot)=>{
                     let demands = {
                         confirmed:[],
                         sent:[],
                         pending:[]
                     }
 
+                    
                     let list = [];
                     snapshot.forEach(val=>{
                         let demand = val.val();
@@ -304,43 +305,30 @@ export default class Service
                         list.push(demand);
                     })
 
-                    firebase.database().ref("/demandas/").orderByChild("pickDayEnd").startAt(today).on("value",async(snapshot)=>{
-                        snapshot.forEach(val=>{
-                            let demand = val.val();
-                            if(demand.pickDayIni < today)
-                            {
-                                let demand = val.val();
-                                demand.id = val.key;
-                                list.push(demand);
-                            }
-                        })
-
-                        await this.dataservice.getcountries();
-                        for(let item in list)
+                    await this.dataservice.getcountries();
+                    for(let item in list)
+                    {
+                        if(!list[item].desestimadas || list[item].desestimadas.indexOf(transporterId) < 0)
                         {
-                            if(!list[item].desestimadas || list[item].desestimadas.indexOf(transporterId) < 0)
+                            if(list[item].status == 'confirmed' &&  list[item].userTrans == transporterId)
                             {
-                                if(list[item].status == 'confirmed' &&  list[item].userTrans == transporterId)
-                                {
-                                    if((list[item].deliverDayEnd && list[item].deliverDayEnd >= today) || (list[item].deliverDayIni && list[item].deliverDayIni >= today)){
-                                        demands.confirmed.push(list[item]);
-                                    }
+                                if((list[item].deliverDayEnd && list[item].deliverDayEnd >= today) || (list[item].deliverDayIni && list[item].deliverDayIni >= today)){
+                                    demands.confirmed.push(list[item]);
                                 }
-                                else if(list[item].status == 'pending' && this.isItemInteresting(list[item],user) && ((list[item].pickDayEnd && list[item].pickDayEnd > today) || list[item].pickDayIni > today))
-                                {
-                                    let results = await this.parsedemand(list[item],transporterId);
-                                    demands.pending = demands.pending.concat(results.pending);
-                                    demands.sent = demands.sent.concat(results.sent);
-                                }
+                            }
+                            else if(list[item].status == 'pending' && this.isItemInteresting(list[item],user))
+                            {
+                                console.log(list[item]);
+                                let results = await this.parsedemand(list[item],transporterId);
+                                demands.pending = demands.pending.concat(results.pending);
+                                demands.sent = demands.sent.concat(results.sent);
                             }
                         }
+                    }
 
-                        resolve(demands);
-                    })
-
-
-                    
+                    resolve(demands);
                 })
+                
             })
         })
     }
@@ -514,7 +502,31 @@ export default class Service
             }}).then(function(){
                 resolve(true);
             }).catch(err=>reject(err))
+        })       
+    }
+
+    getmyroute = (state) => {
+        return new Promise((resolve,reject)=>{
+            AsyncStorage.getItem("user").then(value=>{
+                let user = JSON.parse(value);
+                firebase.database().ref("/routes/" + user.uid).on("value",snapshot=>{
+                    let list = [];
+                    if(snapshot.exists())
+                    {
+                        snapshot.forEach(route=>{
+                            route = route.val();
+                            if(route.state == state)
+                            {
+                                list.push(route);
+                            }
+                        })
+                    }
+                    else
+                    {
+                        return [];
+                    }
+                })
+            })
         })
-        
     }
 } 

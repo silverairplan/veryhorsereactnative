@@ -5,9 +5,20 @@ import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native
 import Moment from 'moment';
 import PageContainer from '../components/PageContainer';
 import Service from '../service/service';
-
-class MyDemand extends React.Component
+import AutoHeightImage from 'react-native-auto-height-image';
+class MyRoute extends React.Component
 {
+    vehicle = [
+        {image:require('../assets/vehiculos/vehiculo_1.png'),value:1},
+        {image:require('../assets/vehiculos/vehiculo_2.png'),value:2},
+        {image:require('../assets/vehiculos/vehiculo_3.png'),value:3},
+        {image:require('../assets/vehiculos/vehiculo_4.png'),value:4},
+        {image:require('../assets/vehiculos/vehiculo_5.png'),value:5},
+        {image:require('../assets/vehiculos/vehiculo_6.png'),value:6},
+        {image:require('../assets/vehiculos/vehiculo_7.png'),value:7},
+        {image:require('../assets/vehiculos/vehiculo_8.png'),value:8}
+    ]
+
     constructor(props)
     {
         super(props);
@@ -20,7 +31,7 @@ class MyDemand extends React.Component
     getinformation = (state) => {
         let service = new Service();
         let self = this;
-        service.getdemand(state).then(result=>{
+        service.getmyroute(state).then(result=>{
             self.setState({
                 data:result,
                 tab:state
@@ -41,9 +52,20 @@ class MyDemand extends React.Component
         this.getinformation("pending");    
     }
 
+    getvehicle = (vehicle) => {
+        for(let item in this.vehicle)
+        {
+            if(this.vehicle[item].value == vehicle)
+            {
+                return this.vehicle[item].image;
+            }
+        }
+    }
+
     render()
     {
         const {intlData} = this.props;
+        
         return (
             <PageContainer {...this.props} bannerenable={true}>
                 <View style={style.container}>
@@ -61,13 +83,21 @@ class MyDemand extends React.Component
                                 return (
                                     <TouchableOpacity key={index} style={style.contentitem} onPress={()=>this.props.navigation.navigate('MYDEMANDITEM',{id:row.id})}>
                                         <View style={{flexDirection:'row',alignItems:'center'}}>
-                                            <Image source={{uri:'https://www.countryflags.io/' + row.pickCountry.toLowerCase() + '/flat/64.png'}} style={style.flagimage}></Image>    
-                                            <Text style={{marginLeft:10}}>{row.pickCityName}</Text>
-                                            <Text> > </Text>
-                                            <Image source={{uri:'https://www.countryflags.io/' + row.deliverCountry.toLowerCase() + '/flat/64.png'}} style={style.flagimage}></Image>
-                                            <Text style={{marginLeft:10}}>{row.deliverCityName}</Text>
+                                            <View>
+                                                <AutoHeightImage source={this.getvehice(row.vehicle)} width={wp('10%')}></AutoHeightImage>
+                                            </View>
+                                            <View>
+                                                <View style={{flexDirection:'row'}}>
+                                                    <Image source={{uri:'https://www.countryflags.io/' + row.pickCountry.toLowerCase() + '/flat/64.png'}} style={style.flagimage}></Image>    
+                                                    <Text style={{marginLeft:10}}>{row.pickCityName}</Text>
+                                                    <Text> > </Text>
+                                                    <Image source={{uri:'https://www.countryflags.io/' + row.deliverCountry.toLowerCase() + '/flat/64.png'}} style={style.flagimage}></Image>
+                                                    <Text style={{marginLeft:10}}>{row.deliverCityName}</Text>
+                                                </View>
+                                                <Text>Recogida: {Moment(new Date(row.pickDayIni)).format('DD-MMM')} - Entrega: {Moment(new Date(row.deliverDayIni)).format('DD-MMM')}</Text>    
+                                            </View>
                                         </View>
-                                        <Text>Recogida: {Moment(new Date(row.pickDayIni)).format('DD-MMM')} - Entrega: {Moment(new Date(row.deliverDayIni)).format('DD-MMM')}</Text>
+                                        
                                     </TouchableOpacity>
                                 )
                             })
@@ -129,4 +159,4 @@ const style = StyleSheet.create({
     }
 })
 
-export default connect(MyDemand);
+export default connect(MyRoute);

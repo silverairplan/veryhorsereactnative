@@ -226,6 +226,7 @@ export default {
 	RECUPERAR: 'Recuperare',
 	REQUIRED_VEHICLE: 'Veicolo richiesto',
 	QUE_DESEA_HACER: 'Cosa vorresti fare?',
+	Route:"Itinerario",
 	SOPORTE_T: 'ASSISTENZA TECNICA',
 	SALTAR: 'Salta la presentazione',
 	SELECCIONE: 'Selezionare un livello di stelle e, se lo si desidera, aggiungere commenti per riferimento ad altri utenti.',

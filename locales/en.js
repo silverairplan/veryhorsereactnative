@@ -126,7 +126,7 @@ export default {
     NUMERO_I: 'Identification Number',
     RESPONSABLE: 'Responsible',
     IDIOMA: 'Language',
-
+    Route:"Route",
     NFORMACION: 'Enter your card information',
     PAGO_VERY: 'Payment VeryHorse',
     ERROR_PAGO: 'An unknown error occurred and the payment could not be processed',

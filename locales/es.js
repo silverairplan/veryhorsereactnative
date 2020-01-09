@@ -145,12 +145,10 @@ export default {
     OLVIDO: '¿Olvidó su contraseña?',
     ONLY_NUMBERS: 'Únicamente números',
     OWNER:"Propietarios",
-
+    Route:"Ruta",
 
 
     RESPONSABLE: 'Responsable',
-
-
 
 
     PAGO_VERY: 'Pago VeryHorse',

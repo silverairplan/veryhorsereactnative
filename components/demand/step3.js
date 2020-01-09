@@ -36,7 +36,7 @@ class Step3 extends React.Component
                     <Text style={style.label}>{intlData.messages['SELECCIONE2']}</Text>
                 </View>
                 <View style={style.formgroup}>
-                    <Text style={style.label}>{intlData.messages['ENTRE']} *:</Text>
+                    <Text style={style.label}>{this.props.mode == 'between'?intlData.messages['ENTRE']:intlData.messages['EL_DIA']} *:</Text>
                     <DatePicker 
                         mode="date" 
                         style={style.dateInput} 

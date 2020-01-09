@@ -74,6 +74,7 @@ export default {
     SENT: 'Verzonden',
 	SIGUIENTE: 'Volgende',
 	SI: 'Ja',
+	Route:"Route",
 	TRANSPORTE: 'Kwaliteitstransport',
 	TRASLADO: 'Vereisten voor overdracht',
 	TRASLADO_NEW: 'Nieuwe overdrachtsvraag',

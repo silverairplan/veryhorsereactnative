@@ -236,6 +236,7 @@ export default {
 	SEDE: 'Siège social',
 	SERVICES: 'Prestations de services',
 	SHOW_ROUTE: 'Afficher l\'itinéraire',
+	Route:"Route",
 	TERMINOS_USO_POLITICA: 'CONDITIONS D\'UTILISATION ET POLITIQUE DE CONFIDENTIALITÉ',
 	TRASPORTISTA: 'Transporteurs',
 	TEXTO_TRANSPORTE_CALIDAD: '<p>L\'APP qui réunit les transporteurs et les propriétaires du monde équin.</p><p>S\'inscrire et trouver le transport idéal pour votre cheval.</p>',

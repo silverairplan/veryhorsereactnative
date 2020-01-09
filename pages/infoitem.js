@@ -25,6 +25,7 @@ class Introitem extends React.Component
         var pageservice = new PageService();
         let self = this;
         pageservice.getintroitem(introid).then(data=>{
+            console.log(data);
             self.setState({
                 data:data,
                 spinner:false
@@ -36,9 +37,11 @@ class Introitem extends React.Component
     alerternode = (node) => {
         const { name, parent } = node;
         if (name === 'img') {
-           node.attribs.style = "";
-           node.attribs.width = "";
-           node.attribs.height = "";
+            let attributes = {};
+            attributes.style = "min-width:100%";
+            attributes.src = node.attribs.src;
+            node.attribs = attributes;
+            console.log(node);
             return node;
         }
     }
@@ -57,8 +60,8 @@ class Introitem extends React.Component
                         <View>
                             <Text style={style.contenttitle}>{this.state.data.title?this.state.data.title[intlData.locale]:""}</Text>
                         </View>
-                        <View>
-                            <HTML html={this.state.data.content?this.state.data.content[intlData.locale]:''} tagsStyles={{p:style.p_style,img:style.img_style,em:style.em_style,h5:style.h5_style}} imagesMaxWidth={wp('85%')} alterNode={this.alerternode}></HTML>
+                        <View style={{flex:1}}>
+                            <HTML html={this.state.data.content?this.state.data.content[intlData.locale]:''} tagsStyles={{p:style.p_style,em:style.em_style,h5:style.h5_style}} imagesMaxWidth={wp('85%')} alterNode={this.alerternode}></HTML>
                         </View>
                     </View>
                 </PageContainer>
