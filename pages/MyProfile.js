@@ -451,10 +451,10 @@ class MyProfile extends React.Component
                                     }
                                 </View>
                                 <View style={style.btncontainer}>
-                                    <TouchableOpacity style={{marginLeft:'auto',...style.btn}} onPress={this.deleteaccount}>
+                                    <TouchableOpacity style={style.btn} onPress={this.deleteaccount}>
                                         <Text style={style.text}>{intlData.messages['ELIMINAR_CUENTA']}</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={style.btn} onPress={this.send}>
+                                    <TouchableOpacity style={{marginLeft:'auto',...style.btn}} onPress={this.send}>
                                         <Text style={style.text}>{intlData.messages['CONFIRMAR']}</Text>
                                     </TouchableOpacity>
                                     
