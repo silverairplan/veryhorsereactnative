@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 import {AsyncStorage} from 'react-native';
 import axios from 'axios';
+import DataService from './dataservice';
 export default class UserService
 {
     constructor()
@@ -58,8 +59,16 @@ export default class UserService
 
     registeruser = (user,callback) => {
         firebase.auth().createUserWithEmailAndPassword(user.email,user.password).then(function(firebaseuser){
-            user.createdAt = new Date();
-            user.aprobado = true;
+            user.createdAt = new Date().getTime();
+            if(user.type != 'user')
+            {
+                user.aprobado = false;
+            }
+            else
+            {
+                user.aprobado = true;
+            }
+            
             console.log(firebaseuser.user.uid);
             firebase.database().ref("/users/" + firebaseuser.user.uid).set(user).then(function(ref){
                 var mailchimpdata = {
@@ -76,6 +85,35 @@ export default class UserService
                     data:JSON.stringify({data:mailchimpdata}),
                     action:'send_suscription'
                 }});
+
+                let dataservice  = new DataService();
+                
+                if(user.type == 'transportista')
+                {
+                    dataservice.getcountries().then(countries=>{
+                        let paises = [];
+                        for(let item in countries)
+                        {
+                            if(user.interestedCountries.indexOf(countries[item].iso2) > -1)
+                            {
+                                paises.push(countries[item]);
+                            }
+                        }  
+
+                        user.paises = paises;
+
+                        axios.get("http://admin.veryhorse.com/php/send.php",{params:{data:JSON.stringify({data:user}),action:"send_new_transportista"}}).then(res=>{
+
+                        })
+                    })
+                }
+                else
+                {   
+                    axios.get("http://admin.veryhorse.com/php/send.php",{params:{data:JSON.stringify({data:user}),action:"create_new_user"}}).then(res=>{
+
+                    })
+                }
+                
                 callback({success:true});
             })
         },function(error){

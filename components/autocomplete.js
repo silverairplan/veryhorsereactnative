@@ -27,11 +27,13 @@ class AutoComplete extends React.Component
     getcountry = (name) => {
         for(let item in this.state.countries)
         {
-            if(this.state.countries[item].nombre == name)
+            if(this.state.countries[item].iso2 == name)
             {
                 return this.state.countries[item];
             }
         }
+
+        return {};
     }
     selectchange = (value) => {
         console.log(value);
@@ -50,13 +52,14 @@ class AutoComplete extends React.Component
             }
         }  
         
-        this.props.selectchange(countries);
+        this.props.selectchange(value);
     }
 
     render()
     {
         let self = this;
         const {intlData} = this.props;
+        console.log(this.props.value);
         return (
             <View style={style.container}>
                 <View style={{flexDirection:'row',flexWrap:'wrap'}}>
@@ -64,14 +67,14 @@ class AutoComplete extends React.Component
                         this.props.value.map((row,index)=>{
                             return (
                                 <TouchableOpacity key={index} style={style.btn}>
-                                    <Text style={{marginRight:10,color:'white'}}>{row.nombre}</Text>
+                                    <Text style={{marginRight:10,color:'white'}}>{this.getcountry(row)['nombre']}</Text>
                                     <Icon name="times" onPress={(index)=>self.props.remove(index)}></Icon>
                                 </TouchableOpacity>
                             )
                         })
                     }
                 </View>
-                <Multiple styleSelectorContainer={style.input} hideTags={true} uniqueKey="nombre" displayKey="nombre" tagRemoveIconColor="white" items={this.state.countries} selectedItems={this.props.value}  onSelectedItemsChange={(value)=>this.selectchange(value)} selectText={intlData.messages['SELECT']} ></Multiple>
+                <Multiple styleSelectorContainer={style.input} hideTags={true} uniqueKey="iso2" displayKey="nombre" tagRemoveIconColor="white" items={this.state.countries} selectedItems={this.props.value}  onSelectedItemsChange={(value)=>this.selectchange(value)} selectText={intlData.messages['SELECT']} ></Multiple>
             </View>
         )
     }

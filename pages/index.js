@@ -23,3 +23,6 @@ export {default as AskPending} from './AskPending';
 export {default as CarrierRegister} from './RegisterCarrier';
 export {default as CarrierDemand} from './CarrierDemand';
 export {default as Compartar} from './Compartir';
+export {default as NewRoute} from './NewRoute';
+export {default as MyRoute} from './MyRoute';
+export {default as RouteItem} from './RouteItem';

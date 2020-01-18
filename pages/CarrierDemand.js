@@ -5,7 +5,8 @@ import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native
 import Moment from 'moment';
 import PageContainer from '../components/PageContainer';
 import Service from '../service/service';
-
+import Spinner from 'react-native-loading-spinner-overlay';
+import { NavigationEvents } from 'react-navigation';
 class CarrierDemand extends React.Component
 {
     constructor(props)
@@ -17,7 +18,8 @@ class CarrierDemand extends React.Component
                 pending:[],
                 confirmed:[]
             },
-            tab:"pending"
+            tab:"pending",
+            spinner:true
         }
     }
 
@@ -26,7 +28,8 @@ class CarrierDemand extends React.Component
         let self = this;
         service.getalldemand().then(result=>{
             self.setState({
-                data:result
+                data:result,
+                spinner:false
             })
         })
     }  
@@ -38,19 +41,31 @@ class CarrierDemand extends React.Component
     }
     componentDidMount()
     {
-        this.getinformation("pending");
+        this.getinformation();
     }
 
     componentWillReceiveProps()
     {
-        this.getinformation("pending");    
+        this.setState({
+            spinner:true
+        })
+        this.getinformation();    
     }
 
+    getcount = async(demandid) => {
+        let service = new Service();
+        let count = await service.getdemandquotecount(demandid);
+        return count;
+    }
     render()
     {
         const {intlData} = this.props;
         return (
             <PageContainer {...this.props} bannerenable={true}>
+                <NavigationEvents
+                    onDidFocus={() => this.getinformation()}
+                />
+                <Spinner visible={this.state.spinner} textContent="Loading ..." textStyle={{color:'white'}}></Spinner>
                 <View style={style.container}>
                     <View style={style.tab}>
                         <TouchableOpacity style={this.state.tab == 'pending'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("pending")}>
@@ -68,14 +83,28 @@ class CarrierDemand extends React.Component
                             this.state.data[this.state.tab].map((row,index)=>{
                                 return (
                                     <TouchableOpacity key={index} style={style.contentitem} onPress={()=>this.props.navigation.navigate('MYDEMANDITEM',{id:row.id})}>
-                                        <View style={{flexDirection:'row',alignItems:'center'}}>
-                                            <Image source={{uri:'https://www.countryflags.io/' + row.pickCountry.toLowerCase() + '/flat/64.png'}} style={style.flagimage}></Image>    
-                                            <Text style={{marginLeft:10}}>{row.pickCityName}</Text>
-                                            <Text> > </Text>
-                                            <Image source={{uri:'https://www.countryflags.io/' + row.deliverCountry.toLowerCase() + '/flat/64.png'}} style={style.flagimage}></Image>
-                                            <Text style={{marginLeft:10}}>{row.deliverCityName}</Text>
+                                        <View style={{flexDirection:'row'}}>
+                                            <View style={{flex:1}}>
+                                                <View style={{flexDirection:'row',alignItems:'center',flexWrap:'wrap'}}>
+                                                    <Image source={{uri:'https://www.countryflags.io/' + row.pickCountry.toLowerCase() + '/flat/64.png'}} style={style.flagimage}></Image>    
+                                                    <Text style={{marginLeft:10}}>{row.pickCityName?row.pickCityName:row.pickCity}</Text>
+                                                    <Text> > </Text>
+                                                    <Image source={{uri:'https://www.countryflags.io/' + row.deliverCountry.toLowerCase() + '/flat/64.png'}} style={style.flagimage}></Image>
+                                                    <Text style={{marginLeft:10}}>{row.deliverCityName?row.deliverCityName:row.deliverCity}</Text>
+                                                </View>
+                                                <Text>Recogida: {Moment(new Date(row.pickDayIni)).format('DD-MMM')} - Entrega: {Moment(new Date(row.deliverDayIni)).format('DD-MMM')}</Text>
+                                            </View>
+                                            {
+                                                row.count > 0 && (
+                                                    <View style={{width:wp('10%'),justifyContent:'center'}}>
+                                                        <TouchableOpacity style={style.badge}>
+                                                            <Text style={{color:'white',textAlign:'center'}}>{row.count}</Text>
+                                                        </TouchableOpacity>
+                                                    </View>    
+                                                )
+                                            }
                                         </View>
-                                        <Text>Recogida: {Moment(new Date(row.pickDayIni)).format('DD-MMM')} - Entrega: {Moment(new Date(row.deliverDayIni)).format('DD-MMM')}</Text>
+                                        
                                     </TouchableOpacity>
                                 )
                             })
@@ -136,6 +165,13 @@ const style = StyleSheet.create({
     flagimage:{
         width:hp('3%'),
         height:hp('3%')
+    },
+    badge:{
+        borderRadius:wp('2.5%'),
+        width:wp('5%'),
+        height:wp('5%'),
+        backgroundColor:'red',
+        justifyContent:'center'
     }
 })
 

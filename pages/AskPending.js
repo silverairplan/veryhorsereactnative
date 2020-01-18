@@ -96,14 +96,14 @@ const style = StyleSheet.create({
         marginTop:hp('2%')
     },
     flagcontainer:{
-        flexDirection:'row',
         justifyContent:'center',
-        marginTop:hp('3%')
+        marginTop:hp('7%')
     },
     flagitem:{
         width:hp('5.5%'),
         height:hp('5.5%'),
-        margin:'auto'
+        margin:'auto',
+        alignSelf:'center'
     },
     flagimg:{
         width:hp('5.5%'),

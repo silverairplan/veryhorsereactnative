@@ -51,6 +51,8 @@ target 'veryhorsereactnative' do
 
 
 
+  pod 'react-native-version-number', :path => '../node_modules/react-native-version-number'
+
   target 'veryhorsereactnativeTests' do
     inherit! :search_paths
     # Pods for testing

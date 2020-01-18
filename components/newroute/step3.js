@@ -6,7 +6,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import Moment from 'moment';
 import Geocoding from 'react-native-geocoding';
 import Service from '../../service/service';
-class Step5 extends React.Component
+class Step3 extends React.Component
 {
     constructor(props)
     {
@@ -20,19 +20,8 @@ class Step5 extends React.Component
         }
     }
 
-    gettitle = (mode,firstdate,seconddate) => {
-        const {intlData} = this.props;
-        switch(mode)
-        {
-            case 'before':
-                return intlData.messages['ANTES_DIA'] + " " +  firstdate?Moment(new Date(firstdate)).format("DD-MM-YYYY"):"";
-            case 'after':
-                return intlData.messages['DESPUES'] + " " +  firstdate?Moment(new Date(firstdate)).format("DD-MM-YYYY"):"";
-            case 'day':
-                return firstdate?Moment(new Date(firstdate)).format("DD-MM-YYYY"):"";
-            case 'between':
-                return intlData.messages['ENTRE'] + " " + Moment(new Date(firstdate)).format("DD-MM-YYYY") + " " + intlData.messages['Y_EL'] + " " + Moment(new Date(seconddate)).format("dd-MM-YYYY");
-        }
+    gettitle = (mode,firstdate) => {
+        return firstdate?Moment(new Date(firstdate)).format("DD-MM-YYYY"):"";
     }
     
     
@@ -68,6 +57,8 @@ class Step5 extends React.Component
 
         return {latitude:origin.latitude,longitude:origin.longitude,latitudeDelta:latitudeDelta,longitudeDelta:longitudeDelta};
     }
+
+    
     
     render()
     {
@@ -106,34 +97,13 @@ class Step5 extends React.Component
                 }
                 <Text style={style.description}>{distance} km</Text>
                 <View style={style.formgroup}>
-                    <Text style={style.label}>{intlData.messages['RECOGIDA']}</Text>
-                    <Text style={style.description}>{this.props.data.pickCity} {this.gettitle(this.props.data.pickMod,this.props.data.pickDayIni,this.props.data.pickDayEnd)}</Text>
+                    <Text style={style.label}>{intlData.messages['DEPARTURE']}</Text>
+                    <Text style={style.description}>{this.props.data.pickCity} {this.gettitle(this.props.data.pickMod,this.props.data.pickDayIni)}</Text>
                 </View>
                 <View style={style.formgroup}>
-                    <Text style={style.label}>{intlData.messages['ENTREGA']}</Text>
-                    <Text style={style.description}>{this.props.data.deliverCity} {this.gettitle(this.props.data.deliverMod,this.props.data.deliverDayIni,this.props.data.deliverDayEnd)}</Text>
+                    <Text style={style.label}>{intlData.messages['Arrival']}</Text>
+                    <Text style={style.description}>{this.props.data.deliverCity} {this.gettitle(this.props.data.deliverMod,this.props.data.deliverDayIni)}</Text>
                 </View>
-                <View style={style.formgroup}>
-                    <Text style={style.label}>{intlData.messages['NUMERO_C']}</Text>
-                    <Text style={style.description}>{this.props.data.numHorses}</Text>
-                </View>
-                <View style={style.formgroup}>
-                    <Text style={style.label}>{intlData.messages['EQUIPAJE']}</Text>
-                    <Text style={style.description}>{this.props.data.lugage?intlData.messages['SI']:'No'}</Text>
-                </View>
-                {
-                    this.props.data.lugage && (
-                        <View style={style.formgroup}>
-                            <Text style={style.specialdescription}>{this.props.data.lugageDesc}</Text>
-                        </View>
-                    )
-                }
-                <View style={style.formgroup}>
-                    <Text style={style.label}>{intlData.messages['TRATAMIENTO2']}</Text>
-                </View>
-                <Text style={style.specialdescription}>
-                    {this.props.data.specialDesc}
-                </Text>
             </View>
         )
     }
@@ -150,12 +120,14 @@ const style = StyleSheet.create({
     },
     formgroup:{
         flexDirection:"row",
-        marginTop:hp('3%')
+        marginTop:hp('3%'),
+        flexWrap:'wrap'
     },
     label:{
         fontSize:hp('2.3%'),
         fontWeight:'bold',
-        color:'white'
+        color:'white',
+        flexWrap:'wrap'
     },
     description:{
         fontSize:hp('2.3%'),
@@ -167,4 +139,4 @@ const style = StyleSheet.create({
         color:'white'
     }
 })
-export default Step5;
+export default Step3;

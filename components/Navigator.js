@@ -16,6 +16,24 @@ class Navigator extends React.Component
                     type:["user"]
                 },
                 {
+                    title:"NewRoute",
+                    icon:require('../assets/imgs/menu/nueva_demanda.png'),
+                    navigate:'NewRoute',
+                    type:["transportista"]
+                },
+                {
+                    title:"MYRoute",
+                    icon:require('../assets/imgs/menu/mis_demandas.png'),
+                    navigate:'MyRoute',
+                    type:["transportista"]
+                },
+                {
+                    title:"Route",
+                    icon:require('../assets/imgs/menu/mis_demandas.png'),
+                    navigate:'MyRoute',
+                    type:["user"]
+                },
+                {
                     title:'MI_DEMANDA',
                     icon:require('../assets/imgs/menu/mis_demandas.png'),
                     navigate:'MYDEMAND',
@@ -25,13 +43,13 @@ class Navigator extends React.Component
                     title:'TRASLADO',
                     icon:require('../assets/imgs/menu/mis_demandas.png'),
                     navigate:'CarrierDeMand',
-                    type:["transportista"]
+                    type:["transportista","carrier"]
                 },
                 {
                     title:'MI_CUENTA',
                     icon:require('../assets/imgs/menu/mi_cuenta.png'),
                     navigate:'MyProfile',
-                    type:["user","transportista"]
+                    type:["user","transportista","carrier"]
                 },
                 {
                     title:'VALORACION',
@@ -49,13 +67,13 @@ class Navigator extends React.Component
                     title:'HOTELS',
                     icon:require('../assets/imgs/menu/hotels.png'),
                     navigate:'RouteShop',
-                    type:["viewer","user","transportista"]
+                    type:["viewer","user","transportista","carrier"]
                 },
                 {
                     title:'CONTACTO',
                     icon:require('../assets/imgs/menu/contacto.png'),
                     navigate:'Contact',
-                    type:["viewer","user","transportista"]
+                    type:["viewer","user","transportista","carrier"]
                 },
                 {
                     title:'MENU_ME',
@@ -67,7 +85,7 @@ class Navigator extends React.Component
                     title:'COMPARTIR',
                     icon:require('../assets/imgs/menu/compartir.png'),
                     navigate:'Compartir',
-                    type:["viewer","user","transportista"]
+                    type:["viewer","user","transportista","carrier"]
                 },
                 {
                     title:'PRESENTACION',
@@ -79,7 +97,7 @@ class Navigator extends React.Component
                     title:'SALIR',
                     icon:require('../assets/imgs/menu/salir.png'),
                     navigate:'SALIR',
-                    type:["user","transportista"]
+                    type:["user","transportista","carrier"]
                 },
                 {
                     title:'HELP',

@@ -69,6 +69,9 @@ class RegisterForm extends React.Component
                     }
                     else
                     {
+                        self.setState({
+                            creatinguser:false
+                        })
                         alert(data.error);
                     }
                                        

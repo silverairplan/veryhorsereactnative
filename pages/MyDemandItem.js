@@ -60,10 +60,13 @@ class MyDemandItem extends React.Component
             service.getdemanditem(demandid).then(async(demand)=>{
                 let proposal = await service.getproposal(demandid);
                 let myproposal = false;
+                let proposalitem = {};
                 for(let item in proposal)
                 {
+                    console.log(proposal[item]);
                     if(proposal[item].transportista == user.uid)
                     {
+                        proposalitem = proposal[item];
                         myproposal = true;
                         break;
                     }
@@ -72,7 +75,8 @@ class MyDemandItem extends React.Component
                     data:demand,
                     proposal:proposal,
                     user:user,
-                    myproposal:myproposal
+                    myproposal:myproposal,
+                    proposalitem:proposalitem
                 })
     
                 let origin = await self.getlocation(demand.pickCity);
@@ -111,10 +115,28 @@ class MyDemandItem extends React.Component
         self.setState({
             confirm:false
         })
-        service.deletedemand(demandid,function(){
-            self.props.navigation.navigate('MYDEMAND');
-        })
+
+        if(!this.sending)
+        {
+            this.sending = true;
+            service.deletedemand(demandid,function(){
+                if(self.props.navigation.state.params.routeid)
+                {
+                    self.props.navigation.goBack();
+                }
+                else
+                {
+                    self.props.navigation.navigate('MYDEMAND');
+                }
+                self.sending = false;
+            })
+        }
+        
+        
     }
+
+    
+
 
     getlocation = (address) => {
         return new Promise((resolve,reject)=>{
@@ -165,7 +187,10 @@ class MyDemandItem extends React.Component
                 this.sending = true;
                 let service = new Service();
                 let self = this;
-                service.sendproposal(this.props.navigation.state.param.demandid,this.state.proposalitem).then(function(success){
+
+                let data = this.state.proposalitem;
+                data.transportista = this.state.user.uid;
+                service.sendproposal(this.props.navigation.state.params.id,this.state.data,this.state.proposalitem).then(function(success){
                     self.sending = false;
                     self.setState({
                         proposalsent:true
@@ -179,6 +204,7 @@ class MyDemandItem extends React.Component
     title = (type) => {
         const {intlData} = this.props;
         let data = this.state.data;
+        console.log(data);
         let string = "";
         switch(data[type + "Mod"])
         {
@@ -192,7 +218,7 @@ class MyDemandItem extends React.Component
                 string = Moment(new Date(data[type + "DayIni"])).format('DD-MM-YYYY')
                 break;
             case 'between':
-                string = intlData.messages['ENTRE'] + " " + Moment(new Date(data[type + "DayIni"])).format('DD-MM-YYYY') + " " + intlData.messages['Y_EL'] + " " + Moment(new Date(data[type + "DayIni"])).format('DD-MM-YYYY');
+                string = intlData.messages['ENTRE'] + " " + Moment(new Date(data[type + "DayIni"])).format('DD-MM-YYYY') + " " + intlData.messages['Y_EL'] + " " + Moment(new Date(data[type + "DayEnd"])).format('DD-MM-YYYY');
                 break;
         }
 
@@ -212,6 +238,28 @@ class MyDemandItem extends React.Component
 
     isTrans = () => {
         return this.state.user && this.state.user.type === "transportista";
+    }
+
+    desetimar = () => {
+        let service = new Service();
+        let self = this;
+        self.setState({
+            desetimar:false
+        })
+        service.rejectdemand(this.state.data,this.props.navigation.state.params.id,this.state.user).then(res=>{
+            self.props.navigation.goBack();
+        })
+    }
+
+    deletequote = () => {
+        let service = new Service();
+        let self = this;
+        self.setState({
+            deletequote:false
+        })
+        service.deletequote(this.props.navigation.state.params.id,this.state.proposalitem.id).then(res=>{
+            self.props.navigation.goBack();
+        })
     }
 
     render()
@@ -307,7 +355,7 @@ class MyDemandItem extends React.Component
                                                             return (
                                                                 <RadioButton key={index} labelHorizontal={true}>
                                                                     <RadioButtonInput isSelected={this.state.proposalitem.triptype == row.value} obj={row} index={index} buttonWidth={10}  buttonInnerColor={'#e74c3c'} buttonSize={hp('1.5%')} buttonOuterSize={hp('3.5%')} onPress={(value)=>this.handleChange("triptype",value)}></RadioButtonInput>
-                                                                    <RadioButtonLabel obj={row} index={index} labelHorizontal={true} labelStyle={{fontSize:hp('2.5%'),color:'white'}}></RadioButtonLabel>
+                                                                    <RadioButtonLabel obj={row} index={index} labelHorizontal={true} labelStyle={{fontSize:hp('2.5%'),color:'white'}}  onPress={(value)=>this.handleChange("triptype",value)}></RadioButtonLabel>
                                                                 </RadioButton>
                                                             )
                                                         })
@@ -327,10 +375,11 @@ class MyDemandItem extends React.Component
                                                 mode="date" 
                                                 style={style.forminput} 
                                                 showIcon={false}
-                                                format="DD-MM-YYYY"
-                                                minDate={Moment(new Date()).format('DD-MM-YYYY')}
-                                                onDateChange={(date)=>this.handleChange("showAltPicDay",date)}
-                                                date={this.state.proposalitem.showAltPicDay}
+                                                format="YYYY-MM-DD"
+                                                minDate={Moment(new Date()).format('YYYY-MM-DD')}
+                                                onDateChange={(date)=>this.handleChange("altPicDay",new Date(date).getTime())}
+                                                date={this.state.proposalitem.altPicDay?Moment(new Date(this.state.proposalitem.altPicDay)).format('YYYY-MM-DD'):""}
+                                                placeholder={intlData.messages['RECOGIDA']}
                                                 ></DatePicker>
                                             </View>
                                             <View style={style.groupitem}>
@@ -339,26 +388,28 @@ class MyDemandItem extends React.Component
                                                 mode="date" 
                                                 style={style.forminput} 
                                                 showIcon={false}
-                                                format="DD-MM-YYYY"
-                                                minDate={this.state.proposalitem.showAltPicDay?Moment(new Date(this.state.proposalitem.showAltPicDay)).format('DD-MM-YYYY'):Moment(new Date()).format('DD-MM-YYYY')}
-                                                onDateChange={(date)=>this.handleChange("showAltDelDay",date)}
-                                                date={this.state.proposalitem.showAltDelDay}
+                                                format="YYYY-MM-DD"
+                                                minDate={this.state.proposalitem.altPicDay?Moment(new Date(this.state.proposalitem.altPicDay)).format('YYYY-MM-DD'):Moment(new Date()).format('YYYY-MM-DD')}
+                                                onDateChange={(date)=>this.handleChange("altDelDay",new Date(date).getTime())}
+                                                date={this.state.proposalitem.altDelDay?Moment(new Date(this.state.proposalitem.altDelDay)).format('YYYY-MM-DD'):""}
+                                                placeholder={intlData.messages['ENTREGA']}
                                                 ></DatePicker>
                                             </View>
                                             <View style={{display:'flex',flexDirection:'row',flexWrap:'wrap',...style.groupitem}}>
-                                                <TouchableOpacity style={{marginRight:wp('1%'),...style.btn}} onPress={this.sendproposal}>
-                                                    <Text style={style.description}>{intlData.messages['ENVIAR_COTIZACION']} {this.state.myproposal?intlData.messages['NUEVA']:''}</Text>
-                                                </TouchableOpacity>
-                                                <TouchableOpacity style={style.btn} onPress={this.desetimar}>
-                                                    <Text style={style.description}>{intlData.messages['DESESTIMAR']}</Text>
-                                                </TouchableOpacity>
                                                 {
                                                     this.state.myproposal && (
-                                                        <TouchableOpacity style={style.btn}>
+                                                        <TouchableOpacity style={style.btn} onPress={()=>this.setState({deletequote:true})}>
                                                             <Text style={style.description}>{intlData.messages['DELETE_QUOTE']}</Text>
                                                         </TouchableOpacity>
                                                     )
                                                 }
+                                                <TouchableOpacity style={{marginRight:wp('1%'),...style.btn}} onPress={this.sendproposal}>
+                                                    <Text style={style.description}>{intlData.messages['ENVIAR_COTIZACION']} {this.state.myproposal?intlData.messages['NUEVA']:''}</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity style={style.btn} onPress={()=>this.setState({desetimar:true})}>
+                                                    <Text style={style.description}>{intlData.messages['DESESTIMAR']}</Text>
+                                                </TouchableOpacity>
+                                                
                                                 
                                             </View>
                                         </View>
@@ -410,6 +461,27 @@ class MyDemandItem extends React.Component
                 >
                     <ModalContent>
                         <Text style={style.confirmText}>{intlData.messages['SEGURIDAD2']}</Text>
+                    </ModalContent>
+                </Modal>
+
+                <Modal
+                     visible={this.state.desetimar} 
+                     modalTitle={<ModalTitle title={intlData.messages['DESESTIMAR']}></ModalTitle>}
+                     footer={<ModalFooter><ModalButton style={style.btn} text={intlData.messages['SI']} textStyle={style.description} onPress={()=>this.desetimar()}></ModalButton><ModalButton text={intlData.messages['NO']} onPress={()=>this.setState({desetimar:false})}></ModalButton></ModalFooter>}
+                     onTouchOutside={()=>this.setState({confirm:false})}
+                >
+                    <ModalContent>
+                        <Text style={style.confirmText}>{intlData.messages['ARE_YOU_SURE']}</Text>
+                    </ModalContent>
+                </Modal>
+                <Modal
+                     visible={this.state.deletequote} 
+                     modalTitle={<ModalTitle title={this.state.proposalitem.id}></ModalTitle>}
+                     footer={<ModalFooter><ModalButton style={style.btn} text={intlData.messages['SI']} textStyle={style.description} onPress={()=>this.deletequote()}></ModalButton><ModalButton text={intlData.messages['NO']} onPress={()=>this.setState({deletequote:false})}></ModalButton></ModalFooter>}
+                     onTouchOutside={()=>this.setState({deletequote:false})}
+                >
+                    <ModalContent>
+                        <Text style={style.confirmText}>{intlData.messages['ARE_YOU_SURE']}</Text>
                     </ModalContent>
                 </Modal>
            </PageContainer> 

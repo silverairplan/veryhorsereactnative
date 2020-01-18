@@ -35,12 +35,13 @@ class Step4 extends React.Component
             selecteditems:value
         })
         
+        console.log(value);
         let namearray = [];
         for(let item in value)
         {
             namearray.push(value[item].nombre);
         }
-        this.props.handleChange("paises",namearray);
+        this.props.handleChange("interestedCountries",value);
     }
 
     render()
@@ -51,9 +52,9 @@ class Step4 extends React.Component
         return (
             <View style={style.form}>
                 {
-                    type == 'carrier' && (
+                    type == 'transportista' && (
                         <View style={style.formgroup}>
-                            <Multiple styleSelectorContainer={style.input} hideTags uniqueKey="nombre" displayKey="nombre" tagRemoveIconColor="white" items={this.state.countries} selectedItems={this.state.selecteditems} onSelectedItemsChange={this.selectchange}></Multiple>
+                            <Multiple styleSelectorContainer={style.input} hideTags uniqueKey="iso2" displayKey="nombre" tagRemoveIconColor="white" items={this.state.countries} selectedItems={this.state.selecteditems} onSelectedItemsChange={this.selectchange}></Multiple>
                         </View>
                         
                     )

@@ -1,11 +1,13 @@
 import React from 'react';
-import {View,StyleSheet,TouchableOpacity,Text,Image} from 'react-native';
+import {View,StyleSheet,TouchableOpacity,Text,Image,AsyncStorage} from 'react-native';
 import connect from '../components/connectedcomponent';
 import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Moment from 'moment';
 import PageContainer from '../components/PageContainer';
 import Service from '../service/service';
 import AutoHeightImage from 'react-native-auto-height-image';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {NavigationEvents} from 'react-navigation';
 class MyRoute extends React.Component
 {
     vehicle = [
@@ -24,7 +26,9 @@ class MyRoute extends React.Component
         super(props);
         this.state = {
             data:[],
-            tab:"pending"
+            tab:"pending",
+            spinner:true,
+            user:{}
         }
     }
 
@@ -32,14 +36,23 @@ class MyRoute extends React.Component
         let service = new Service();
         let self = this;
         service.getmyroute(state).then(result=>{
-            self.setState({
-                data:result,
-                tab:state
+            AsyncStorage.getItem("user").then(user=>{
+                user = JSON.parse(user);
+                self.setState({
+                    data:result,
+                    tab:state,
+                    spinner:false,
+                    user:user
+                })
+    
             })
         })
     }  
 
     settab = (tab) => {
+        this.setState({
+            spinner:true
+        })
         this.getinformation(tab);
     }
     componentDidMount()
@@ -52,50 +65,65 @@ class MyRoute extends React.Component
         this.getinformation("pending");    
     }
 
-    getvehicle = (vehicle) => {
-        for(let item in this.vehicle)
-        {
-            if(this.vehicle[item].value == vehicle)
-            {
-                return this.vehicle[item].image;
-            }
-        }
-    }
-
+    
     render()
     {
         const {intlData} = this.props;
         
         return (
             <PageContainer {...this.props} bannerenable={true}>
+                <NavigationEvents
+                    onDidFocus={() => this.getinformation("pending")}
+                />
+                <Spinner visible={this.state.spinner} textContent="Loading ..." textStyle={{color:'white'}}></Spinner>
                 <View style={style.container}>
-                    <View style={style.tab}>
-                        <TouchableOpacity style={this.state.tab == 'pending'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("pending")}>
-                            <Text style={this.state.tab == 'pending'?style.tabtext:style.tabinactivetext}>{intlData.messages['PENDIENTE']}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={this.state.tab== 'confirm'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("confirm")}>
-                            <Text style={this.state.tab == 'confirm'?style.tabtext:style.tabinactivetext}>{intlData.messages['CONFIRMADAS']}</Text>
-                        </TouchableOpacity>
-                    </View>
+                    {
+                        this.state.user.type == 'transportista' && (
+                            <View style={style.tab}>
+                                <TouchableOpacity style={this.state.tab == 'pending'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("pending")}>
+                                    <Text style={this.state.tab == 'pending'?style.tabtext:style.tabinactivetext}>{intlData.messages['PENDIENTE']}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={this.state.tab== 'confirm'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("confirm")}>
+                                    <Text style={this.state.tab == 'confirm'?style.tabtext:style.tabinactivetext}>{intlData.messages['CONFIRMADAS']}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                    }
+                    {
+                        this.state.user.type == 'user' && (
+                            <View style={{paddingLeft:wp('3%'),paddingRight:wp('3%'),marginBottom:hp('1.5%')}}>
+                                <Text style={style.routetitle}>{intlData.messages['ROUTETITLE']}</Text>
+                                <Text style={style.routedesc}>{intlData.messages['ROUTEDESC']}</Text>
+                            </View>        
+                        )
+                    }
+                    
                     <View style={{flex:1}}>
                         {
                             this.state.data.map((row,index)=>{
                                 return (
-                                    <TouchableOpacity key={index} style={style.contentitem} onPress={()=>this.props.navigation.navigate('MYDEMANDITEM',{id:row.id})}>
-                                        <View style={{flexDirection:'row',alignItems:'center'}}>
-                                            <View>
-                                                <AutoHeightImage source={this.getvehice(row.vehicle)} width={wp('10%')}></AutoHeightImage>
-                                            </View>
-                                            <View>
-                                                <View style={{flexDirection:'row'}}>
+                                    <TouchableOpacity key={index} style={style.contentitem} onPress={()=>this.props.navigation.navigate('RouteItem',{id:row.id})}>
+                                        <View style={{flexDirection:'row'}}>
+                                            <View style={{flex:1}}>
+                                                <View style={{flexDirection:'row',alignItems:'center'}}>
                                                     <Image source={{uri:'https://www.countryflags.io/' + row.pickCountry.toLowerCase() + '/flat/64.png'}} style={style.flagimage}></Image>    
                                                     <Text style={{marginLeft:10}}>{row.pickCityName}</Text>
                                                     <Text> > </Text>
                                                     <Image source={{uri:'https://www.countryflags.io/' + row.deliverCountry.toLowerCase() + '/flat/64.png'}} style={style.flagimage}></Image>
                                                     <Text style={{marginLeft:10}}>{row.deliverCityName}</Text>
                                                 </View>
-                                                <Text>Recogida: {Moment(new Date(row.pickDayIni)).format('DD-MMM')} - Entrega: {Moment(new Date(row.deliverDayIni)).format('DD-MMM')}</Text>    
+                                                <Text>Recogida: {Moment(new Date(row.pickDayIni)).format('DD-MMM')} - Entrega: {Moment(new Date(row.deliverDayIni)).format('DD-MMM')}</Text> 
                                             </View>
+                                            {
+                                                Number(row.count) > 0 && (
+                                                    <View style={{width:wp('10%'),justifyContent:'center'}}>
+                                                        <TouchableOpacity style={style.badge}>
+                                                            <Text style={{color:'white',textAlign:'center'}}>{row.count}</Text>
+                                                        </TouchableOpacity>
+                                                    </View>    
+                                                )
+                                            }
+                                            
                                         </View>
                                         
                                     </TouchableOpacity>
@@ -156,6 +184,24 @@ const style = StyleSheet.create({
     flagimage:{
         width:hp('3%'),
         height:hp('3%')
+    },
+    badge:{
+        borderRadius:wp('2.5%'),
+        width:wp('5%'),
+        height:wp('5%'),
+        backgroundColor:'red',
+        justifyContent:'center'
+    },
+    routetitle:{
+        color:'white',
+        fontWeight:'bold',
+        fontSize:hp('2.3%'),
+        textAlign:'center'
+    },
+    routedesc:{
+        color:'white',
+        fontSize:hp('2.2%'),
+        textAlign:'center'
     }
 })
 

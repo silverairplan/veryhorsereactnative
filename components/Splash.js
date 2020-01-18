@@ -3,7 +3,7 @@ import {ImageBackground,View,AsyncStorage} from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import Navigator from './Navigator';
-import {SelectLang,Intro,Info,StaticPage,Presentation,Contact,RouteShop,HotelList,HotelDetail, IntroItem,Login,Forgot,RegisterMain,UserRegister,NewDemand,MyDemand,MyDemandItem,ProposalItem, MyProfile, Valoracies,Valoraciesitem,AskPending,CarrierRegister,CarrierDemand,Compartar} from '../pages';
+import {SelectLang,Intro,Info,StaticPage,Presentation,Contact,RouteShop,HotelList,HotelDetail, IntroItem,Login,Forgot,RegisterMain,UserRegister,NewDemand,MyDemand,MyDemandItem,ProposalItem, MyProfile, Valoracies,Valoraciesitem,AskPending,CarrierRegister,CarrierDemand,Compartar,NewRoute,MyRoute,RouteItem} from '../pages';
 import { createStackNavigator } from 'react-navigation-stack';
 import connect from '../components/connectedcomponent';
 class Splash extends Component
@@ -197,6 +197,24 @@ let RootStack = createStackNavigator({
     },
     Compartir:{
         screen:Compartar,
+        navigationOptions:{
+            header:null
+        }
+    },
+    NewRoute:{
+        screen:NewRoute,
+        navigationOptions:{
+            header:null
+        }
+    },
+    MyRoute:{
+        screen:MyRoute,
+        navigationOptions:{
+            header:null
+        }
+    },
+    RouteItem:{
+        screen:RouteItem,
         navigationOptions:{
             header:null
         }

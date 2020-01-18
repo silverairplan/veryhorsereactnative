@@ -31,7 +31,7 @@ class Step3 extends React.Component
         const {intlData} = this.props;
         return (
             <View style={style.form}>
-                <Text style={style.label}>{intlData.messages['FECHA_R']}</Text>
+                <Text style={style.label}>{this.props.param1 == 'deliverDayIni'?intlData.messages['FECHA_E']:intlData.messages['FECHA_R']}</Text>
                 <View style={style.formgroup}>
                     <Text style={style.label}>{intlData.messages['SELECCIONE2']}</Text>
                 </View>

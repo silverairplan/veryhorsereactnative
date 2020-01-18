@@ -1,249 +1,226 @@
 import React from 'react';
-import {View,Text,StyleSheet,TextInput} from 'react-native';
+import {View,StyleSheet,TouchableOpacity,Text} from 'react-native';
 import PageContainer from '../components/PageContainer';
 import connect from '../components/connectedcomponent';
+import {Step1,Step2,Step3} from '../components/newroute';
 import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import Service from '../service/service';
 class NewRoute extends React.Component
 {
+    sending = false;
     constructor(props)
     {
         super(props);
+        this.state = {
+            data:{
+                pickCity: false,
+                pickCityName:"",
+                pickCountry:"",
+                pickCountryName:"",
+                pickCP: false,
+                deliverCity: false,
+                deliverCityName:"",
+                deliverCountry:"",
+                deliverCountryName:"",
+                deliverCP: false,
+                pickDayIni: false,
+                deliverDayIni: false,
+            },
+            step:0,
+            error:{},
+            sending:false
+        }
     }
 
+    nextstep = () => {
+        let step = this.state.step;
+        if(this.validate(step))
+        {
+            if(step == 4)
+            {
+                let service = new Service();
+                let self = this;
+                if(!this.state.sending)
+                {
+                    this.setState({
+                        sending:true
+                    })
+                    
+                    service.createroute(this.state.data,function(result){
+                        self.props.navigation.navigate("Intro");
+                        self.setSate({
+                            sending:false
+                        })
+                    })
+                }
+                
+            }
+            step = Math.min(this.state.step + 1,4);
+            this.setState({
+                step:step
+            })
+        }
+    }
+    prevstep = () => {
+        let step = Math.max(this.state.step - 1,0);
+        
+        this.setState({
+            step:step
+        })
+    }
+    validate = (step) => {
+        let data = this.state.data;
+        let error = {};
+        const {intlData} = this.props;
+        let enable = true;
+
+        switch(step)
+        {
+            case 0:
+                if(!data.pickCity)
+                {
+                    error.pickCity = intlData.messages['OBLIGATORIO'];
+                    enable = false;
+                }
+
+                if(!data.pickCP)
+                {
+                    error.pickCP = intlData.messages['OBLIGATORIO'];
+                    enable = false;
+                }
+                break;
+            case 1: 
+                if(!data.pickDayIni)
+                {
+                    error.pickDayIni = intlData.messages['OBLIGATORIO'];
+                    enable = false;
+                }
+                break;
+            case 2:
+                if(!data.deliverCity)
+                {
+                    error.deliverCity = intlData.messages['OBLIGATORIO'];
+                    enable = false;
+                }
+
+                if(!data.deliverCP)
+                {
+                    error.deliverCP = intlData.messages['OBLIGATORIO'];
+                    enable = false;
+                }
+                break;
+            case 3: 
+                if(!data.deliverDayIni)
+                {
+                    error.deliverDayIni = intlData.messages['OBLIGATORIO'];
+                    enable = false;
+                }
+                break;
+        }
+
+        this.setState({
+            error:error
+        });
+
+        return enable;
+    }
+
+    getbuttontitle = () => {
+        const {intlData} = this.props;
+        switch(this.state.step)
+        {
+            case 3:
+                return intlData.messages['CONFIRMAR4'];
+            case 4:
+                return intlData.messages['CREATEROUTE'];
+            default:
+                return intlData.messages['SIGUIENTE'];
+        }
+    }
+    
+    handleChange = (name,value) => {
+        let data = this.state.data;
+        data[name] = value;
+
+        this.setState({
+            data:data
+        })
+    }
+    
     render()
     {
         const {intlData} = this.props;
         return (
-            <PageContainer bannerenable={true}>
+            <PageContainer {...this.props} bannerenable={true} backenable={true} backfunction={this.state.step == 0?this.prevstep:false} title={intlData.messages['NewRoute']}>
                 <View style={style.container}>
-                    <View style={style.formgroup}>
-                        <Text style={style.label}>Origin</Text>
-                        <GooglePlacesAutocomplete
-                            placeholder='Search'
-                            minLength={2}
-                            autoFocus={false}
-                            returnKeyType={'search'}
-                            keyboardAppearance={'light'}
-                            listViewDisplayed={false}
-                            fetchDetails={true}
-                            keyboardShouldPersistTaps="handled"
-                            renderDescription={row => row.description}
-                            onPress={(data, details = null) => {
-                                this.props.handleChange(this.props.param1,details.formatted_address);
-                                let countryname = "";
-                                let countrycode = "";
-                                let cityname = "";
-                                for(let item in details.address_components)
-                                {
-                                    if(details.address_components[item].types.indexOf("locality") > -1)
-                                    {
-                                        cityname = details.address_components[item].long_name;
-                                    }
-
-                                    if(details.address_components[item].types.indexOf("country") > -1)
-                                    {
-                                        countryname = details.address_components[item].long_name;
-                                        countrycode = details.address_components[item].short_name;
-                                    }
-                                }
-
-                                console.log(cityname)
-                                if(this.props.param1 == 'pickCity')
-                                {
-                                    this.props.handleChange("pickCityName",cityname);
-                                    this.props.handleChange('pickCountry',countrycode);
-                                    this.props.handleChange('pickCountryName',countryname);
-                                }
-                                else
-                                {
-                                    this.props.handleChange("deliverCityName",cityname);
-                                    this.props.handleChange('deliverCountry',countrycode);
-                                    this.props.handleChange('deliverCountryName',countryname);
-                                }
-                            }}
-                            enablePoweredByContainer={false}
-                            getDefaultValue={() => this.props.data[this.props.param1]}
-                            textInputProps={{
-                                ref: (input) => {this.fourthTextInput = input}
-                            }}
-                            query={{
-                                // available options: https://developers.google.com/places/web-service/autocomplete
-                                key: 'AIzaSyDbsOXv4sPiyPY1p-RGsRtMCwoKZdBMXCM',
-                                language: intlData.locale,
-                                types: 'geocode', // default: 'geocode'
-                            }}
-                            styles={{
-                                container: {width:wp('84%'),backgroundColor:'white',borderRadius:5,zIndex:100},
-                                textInputContainer: {
-                                backgroundColor: 'transparent',
-                                margin: 0,
-                                width: wp('84%'),
-                                padding:0,
-                                borderTopWidth: 0,
-                                borderBottomWidth:0
-                                },
-                                textInput: {
-                                minWidth: wp('25%'), 
-                                borderColor: "#cbb4c0",
-                                borderBottomWidth: 1,
-                                color: '#5d5d5d',
-                                fontSize: 14,
-                                },
-                                description: {
-                                color:'#000',
-                                fontWeight: '300',
-                                zIndex:100
-                                },
-                                predefinedPlacesDescription: {
-                                color: '#1faadb'
-                                }
-                            }}
-                            currentLocation={false} 
-                            nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
-                            GoogleReverseGeocodingQuery={{// available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
-                            }}
-                            GooglePlacesSearchQuery={{
-                                // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-                                rankby: 'distance',
-                                type: 'cafe'
-                            }}    
-                            GooglePlacesDetailsQuery={{
-                                // available options for GooglePlacesDetails API : https://developers.google.com/places/web-service/details
-                                fields: 'formatted_address,address_component,name',
-                            }}
-                            filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']}
-                            debounce={200}
-                            />
-                    </View>
-                    <View style={style.formgroup}>
-                        <Text style={style.label}>Departure De Day</Text>
-                        <TextInput style={style.input}></TextInput>
-                    </View>
-                    <View style={style.formgroup}>
-                        <Text style={style.label}>Destination</Text>
-                        <GooglePlacesAutocomplete
-                            placeholder='Search'
-                            minLength={2}
-                            autoFocus={false}
-                            returnKeyType={'search'}
-                            keyboardAppearance={'light'}
-                            listViewDisplayed={false}
-                            fetchDetails={true}
-                            keyboardShouldPersistTaps="handled"
-                            renderDescription={row => row.description}
-                            onPress={(data, details = null) => {
-                                this.props.handleChange(this.props.param1,details.formatted_address);
-                                let countryname = "";
-                                let countrycode = "";
-                                let cityname = "";
-                                for(let item in details.address_components)
-                                {
-                                    if(details.address_components[item].types.indexOf("locality") > -1)
-                                    {
-                                        cityname = details.address_components[item].long_name;
-                                    }
-
-                                    if(details.address_components[item].types.indexOf("country") > -1)
-                                    {
-                                        countryname = details.address_components[item].long_name;
-                                        countrycode = details.address_components[item].short_name;
-                                    }
-                                }
-
-                                console.log(cityname)
-                                if(this.props.param1 == 'pickCity')
-                                {
-                                    this.props.handleChange("pickCityName",cityname);
-                                    this.props.handleChange('pickCountry',countrycode);
-                                    this.props.handleChange('pickCountryName',countryname);
-                                }
-                                else
-                                {
-                                    this.props.handleChange("deliverCityName",cityname);
-                                    this.props.handleChange('deliverCountry',countrycode);
-                                    this.props.handleChange('deliverCountryName',countryname);
-                                }
-                            }}
-                            enablePoweredByContainer={false}
-                            getDefaultValue={() => this.props.data[this.props.param1]}
-                            textInputProps={{
-                                ref: (input) => {this.fourthTextInput = input}
-                            }}
-                            query={{
-                                // available options: https://developers.google.com/places/web-service/autocomplete
-                                key: 'AIzaSyDbsOXv4sPiyPY1p-RGsRtMCwoKZdBMXCM',
-                                language: intlData.locale,
-                                types: 'geocode', // default: 'geocode'
-                            }}
-                            styles={{
-                                container: {width:wp('84%'),backgroundColor:'white',borderRadius:5,zIndex:100},
-                                textInputContainer: {
-                                backgroundColor: 'transparent',
-                                margin: 0,
-                                width: wp('84%'),
-                                padding:0,
-                                borderTopWidth: 0,
-                                borderBottomWidth:0
-                                },
-                                textInput: {
-                                minWidth: wp('25%'), 
-                                borderColor: "#cbb4c0",
-                                borderBottomWidth: 1,
-                                color: '#5d5d5d',
-                                fontSize: 14,
-                                },
-                                description: {
-                                color:'#000',
-                                fontWeight: '300',
-                                zIndex:100
-                                },
-                                predefinedPlacesDescription: {
-                                color: '#1faadb'
-                                }
-                            }}
-                            currentLocation={false} 
-                            nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
-                            GoogleReverseGeocodingQuery={{// available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
-                            }}
-                            GooglePlacesSearchQuery={{
-                                // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-                                rankby: 'distance',
-                                type: 'cafe'
-                            }}    
-                            GooglePlacesDetailsQuery={{
-                                // available options for GooglePlacesDetails API : https://developers.google.com/places/web-service/details
-                                fields: 'formatted_address,address_component,name',
-                            }}
-                            filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']}
-                            debounce={200}
-                            />
-                    </View>
+                    {
+                         (this.state.step == 0 || this.state.step == 2) && (
+                            <Step1 data={this.state.data} param1={this.state.step == 0?"pickCity":"deliverCity"} param2={this.state.step == 0?"pickCP":"deliverCP"} {...this.props} handleChange={this.handleChange} error={this.state.error}></Step1>
+                         )
+                     }
+                     {
+                         (this.state.step == 1 || this.state.step == 3) && (
+                            <Step2 {...this.props} data={this.state.data} param1={this.state.step == 1?"pickDayIni":"deliverDayIni"} handleChange={this.handleChange} nextstep={this.nextstep} error={this.state.error}></Step2>
+                         )
+                     }
+                     {
+                         this.state.step == 4 && (
+                            <Step3 {...this.props} data={this.state.data}></Step3>
+                         )
+                     }
+                     <View style={style.formgroup}>
+                        <TouchableOpacity style={style.login_btncontainer} onPress={this.nextstep}>
+                            <Text style={style.loginbtn_text}>{this.getbuttontitle()}</Text>
+                        </TouchableOpacity>
+                    </View>       
+                    {
+                        this.state.step != 0 && (
+                        <View style={style.formgroup}>
+                            <TouchableOpacity style={style.backbtn} onPress={this.prevstep}>
+                                <Text style={style.loginbtn_text}>{intlData.messages['ATRAS']}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        )
+                    }
                 </View>
-            </PageContainer>    
+                
+            </PageContainer>
         )
-        
     }
 }
 
 const style = StyleSheet.create({
-    container:{flex:1},
+    container:{
+        flex:1,
+        paddingTop:hp('5%'),
+        paddingLeft:wp('8%'),
+        paddingRight:wp('8%'),
+        paddingBottom:hp('3%')
+    },
     formgroup:{
-        flexDirection:'row',
+        marginTop:hp('2%')
+    },  
+    login_btncontainer:{
+        paddingTop:hp('1.5%'),
+        paddingBottom:hp('1.5%'),
+        backgroundColor:'#dd691b',
+        justifyContent:'center',
+        borderRadius:5,
         marginTop:hp('2%')
     },
-    label:{
-        fontSize:hp('2.2%'),
-        color:'#605e00',
-        fontWeight:'700',
-        paddingBottom:hp('0.5%')
+    loginbtn_text:{
+        color:'white',
+        fontSize:hp('2%'),
+        textAlign:'center'
     },
-    input:{
-        paddingLeft:wp('3%'),
-        paddingTop:hp('1%'),
-        paddingBottom:hp('1%'),
-        backgroundColor:'white',
-        borderRadius:5
+    backbtn:{
+        paddingTop:hp('2%'),
+        paddingBottom:hp('2%'),
+        backgroundColor:'#8b7f25',
+        justifyContent:'center',
+        borderRadius:5,
+        marginTop:hp('2%')
     }
 })
+
 export default connect(NewRoute);

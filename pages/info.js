@@ -1,10 +1,11 @@
 import React from 'react';
-import {View,StyleSheet,TouchableOpacity,Text} from 'react-native';
+import {View,StyleSheet,TouchableOpacity,Text,Platform} from 'react-native';
 import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import PageContainer from '../components/PageContainer';
 import AppService from '../service/service';
 import Modal,{ModalTitle,ModalContent,ModalButton,ModalFooter} from 'react-native-modals';
 import connect from '../components/connectedcomponent';
+import VersionNumber from 'react-native-version-number';
 class Info extends React.Component
 {
     constructor(props)
@@ -67,10 +68,10 @@ class Info extends React.Component
                      visible={this.state.version} 
                      modalTitle={<ModalTitle title={intlData.messages['APP_VERSION']}></ModalTitle>}
                      footer={<ModalFooter><ModalButton text="OK" onPress={()=>this.setState({version:false})}></ModalButton></ModalFooter>}
-                     onTouchOutside={()=>this.setState({visible:false})}
+                     onTouchOutside={()=>this.setState({version:false})}
                 >
                     <ModalContent>
-                        <Text>{intlData.messages['APP_VERSION_TEXT']} 2.1</Text>
+                        <Text>{intlData.messages['APP_VERSION_TEXT']} {VersionNumber.appVersion}</Text>
                     </ModalContent>
                 </Modal>
             </PageContainer>

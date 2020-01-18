@@ -120,9 +120,6 @@ class Contact extends React.Component
                             this.state.sended && (
                                 <View style={style.form}>
                                     <Text style={style.description}>{intlData.messages['MENSAJE_ENVIADO_EXITOSAMENTE']}</Text>
-                                    <View style={{flexDirection:'row'}}>
-                                        <Text style={style.description}>{intlData.messages['CONTACTO_30MIN']}<Text style={style.phone}>911 30 98 10</Text></Text>
-                                    </View>
                                 </View>
                             )
                         }

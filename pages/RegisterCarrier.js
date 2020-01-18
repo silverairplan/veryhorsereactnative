@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,StyleSheet,Image,TextInput,TouchableOpacity,Text} from 'react-native';
+import {View,StyleSheet,Image,TextInput,TouchableOpacity,Text,AsyncStorage} from 'react-native';
 import connect from '../components/connectedcomponent';
 import PageContainer from '../components/PageContainer';
 import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -15,7 +15,7 @@ class RegisterCarrier extends React.Component
         super(props);
         this.state = {
             user:{
-                type                        :"carrier",
+                type                        :"transportista",
                 name_empresa      		    : "",
 				numero_identificacion  		: "",
 				age       		            : "",
@@ -35,7 +35,8 @@ class RegisterCarrier extends React.Component
 				confirmEmail	            : "",
 				password  		            : "",
 				confirmPassword             : "",
-				tos 			            : false
+                tos 			            : false,
+                interestedCountries         :[]
             },        
             error:{
 
@@ -64,14 +65,15 @@ class RegisterCarrier extends React.Component
                         self.props.navigation.navigate('Intro');
                         AsyncStorage.setItem("lang",self.state.user.idioma);
                         updateLanguage(self.state.user.idioma);
-                        self.setState({
-                            creatinguser:false
-                        })
                     }
                     else
                     {
                         alert(data.error);
                     }
+
+                    self.setState({
+                        creatinguser:false
+                    })
                                        
                 })
             }

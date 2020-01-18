@@ -53,11 +53,12 @@ class MyProfile extends React.Component
         const {intlData} = this.props;
         let user = this.state.user;
         let userservice = new UserService();
+        let self = this;
         userservice.deleteuser(user,function(success){
             if(success.success)
             {
                 AsyncStorage.setItem("user","");
-                this.props.navigation.navigate('Intro');
+                self.props.navigation.navigate('Intro');
             }
             else
             {
@@ -116,6 +117,7 @@ class MyProfile extends React.Component
     }
     
     handleChange = (name,value) => {
+        console.log(value);
         let user = this.state.user;
         user[name] = value;
         this.setState({
@@ -371,7 +373,7 @@ class MyProfile extends React.Component
                                             </View>
                                             <View style={style.formgroup}>
                                                 <Text style={style.label}>{intlData.messages['AREA_T']}</Text>
-                                                <AutoComplete value={this.state.user.paises?this.state.user.paises:[]} selectchange = {(value)=>this.handleChange("paises",value)} remove={this.remove} intlData={intlData}></AutoComplete>
+                                                <AutoComplete value={this.state.user.interestedCountries?this.state.user.interestedCountries:[]} selectchange = {(value)=>this.handleChange("interestedCountries",value)} remove={this.remove} intlData={intlData}></AutoComplete>
                                             </View> 
                                         </View>
                                     )

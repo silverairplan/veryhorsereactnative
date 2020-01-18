@@ -4,6 +4,8 @@ import Geolocation from '@react-native-community/geolocation';
 import {AsyncStorage} from 'react-native';
 import * as Util from './Util';
 import DataService from './dataservice';
+import Moment from 'moment';
+
 const apiurl = 'https://newadmin.veryhorse.com';
 
 export default class Service
@@ -41,14 +43,9 @@ export default class Service
 
     getintroduction = () => {
         return new Promise((resolve,reject)=>{
-            firebase.database().ref('/mundoEquino/').on('value',(snapshot)=>{
-                let data = [];
-                snapshot.forEach(item=>{
-                    let dataitem = item.val();
-                    dataitem.id = item.key;
-                    data.push(dataitem);
-                })
-
+            axios.get(apiurl + "/api/mundoEquino").then(res=>{
+                let data = res.data.mundo;
+              
                 data.sort(function(a,b){
                     var aTime = Math.round(new Date(a.date).getTime()/1000),
                         bTime = Math.round(new Date(b.date).getTime()/1000);
@@ -57,6 +54,7 @@ export default class Service
 
                 resolve(data);
             })
+            
         })
     }
 
@@ -194,6 +192,29 @@ export default class Service
         })
     }
 
+    sendemail = (proposal,content,title) => {
+        return new Promise((resolve,reject)=>{
+            firebase.database().ref("/users/" + proposal.transportista).on("value",snapshot=>{
+                let users = snapshot.val();
+                axios({
+                    url:'https://api.sendgrid.com/v3/mail/send',
+                    method:"POST",
+                    headers:{
+                        'Authorization':"Bearer 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",
+                        "Content-Type":"application/json"
+                    },
+                    data:{
+                        "personalizations": [{"to": [{"email": "info@veryhorse.com"}]}],"from": {"email": users.email},"subject": title,"content": [{"type": "text/html", "value": '<html><body><div><strong>User : ' + users.name + '</strong></div><div><strong>User Email : ' + users.email + '</strong></div><div><strong>Price : ' + Util.demandamount(proposal.amount) + '€ </strong> </div><div><strong>Vehicle : ' + proposal.vehicle + '</strong></div><div><p>' + content +'</p></div></body></html>'}]}
+                }).then(function(res){
+                    resolve(true);
+                }).catch(function(err){
+                    reject(err.getMessage());
+                })
+            })
+        })
+        
+    }
+
     sendcontactinfo = (data,language,callback) => {
         data.lang = language;
         axios.get('http://admin.veryhorse.com/php/send.php',{params:{data:JSON.stringify(data),action:"send_emergencias"}}).then(res=>{
@@ -206,19 +227,26 @@ export default class Service
             let user = JSON.parse(value);
             data.user = user.uid;
             data.status = "pending";
+            
+            data.pickDayIni = data.pickDayIni?new Date(data.pickDayIni).getTime():0;
+            data.pickDayEnd = data.pickDayEnd?new Date(data.pickDayIni).getTime():0;
+            data.deliverDayIni = data.deliverDayIni?new Date(data.deliverDayIni).getTime():0;
+            data.deliverDayEnd = data.deliverDayEnd?new Date(data.deliverDayEnd).getTime():0;
             firebase.database().ref("/demandas").push(data).then(function(ref){
+                
+                let senddata = {demand:ref.key,pickCountry:data.pickCountry,deliverCountry:data.deliverCountry,pickCity:data.pickCity,deliverCity:data.deliverCity};
                 console.log(ref.key);
-                pickCountry = data.pickCity.split(',');
-                pickCountry = pickCountry[pickCountry.length - 1];
-                deliverCountry = data.pickCity.split(',');
-                deliverCountry = deliverCountry[deliverCountry.length - 1];
-                let senddata = {demand:ref.key,pickCountry:pickCountry,deliverCountry:deliverCountry,pickCity:data.pickCity,deliverCity:data.deliverCity};
-                axios.get('http://admin.veryhorse.com/php/send.php',{params:{data:JSON.stringify(senddata),action:"send_new_demand"}});
+                axios.get('http://admin.veryhorse.com/php/send.php',{params:{data:JSON.stringify(senddata),action:"send_new_demand"}}).then(res=>{
+                    console.log(res);
+                })
+
+                
                 callback(true);
             })
         })
     }
     
+
     getdemand = (status) => {
         console.log(status);
         return new Promise((resolve,reject)=>{
@@ -227,19 +255,23 @@ export default class Service
                 var myToday = new Date();
                 var today = +(new Date(myToday.getFullYear(), myToday.getMonth(), myToday.getDate(), 0, 0, 0))
                
-                firebase.database().ref("/demandas/").orderByChild("user").equalTo(user.uid).on("value",snapshot=>{
+                firebase.database().ref("/demandas/").orderByChild("user").equalTo(user.uid).on("value",async(snapshot)=>{
                     let array = [];
                     console.log(today);
                     snapshot.forEach(function(item){
                         let data = item.val();
                         data.id = item.key;
                         
-                        
                         if(data.status == status && ((data.pickDayEnd && +(new Date(data.pickDayEnd)) > today) || +(new Date(data.pickDayIni)) > today))
                         {
                             array.push(data);
                         }
                     })
+
+                    for(let item in array)
+                    {
+                        array[item].count = await this.getdemandquotecount(array[item].id);
+                    }
                     resolve(array);
                 })
             })
@@ -252,21 +284,22 @@ export default class Service
                 pending:[],
                 sent:[]
             }
-
-            firebase.database().ref('/proposals/' + item.id).orderByChild("desestimada").equalTo(false).on("value",snapshot=>{
+            
+            firebase.database().ref('/proposals/' + item.id).on("value",snapshot=>{
                 let added = false;
                 snapshot.forEach(value=>{
                     let proposal = value.val();
                     if(proposal.transportista == transporterId)
                     {
-                        let itemcopy = this.iterationCopy(item);
-                        itemcopy.amount = proposal.amount;
+                        let itemCopy = this.iterationCopy(item);
+                        itemCopy.amount = proposal.amount;
                         if(proposal.triptype) {
                             itemCopy.tripTitle = proposal.triptype === 'one_way_trip' ?  'TRIP_ONE_WAY' : 'TRIP_ROUND';
                             itemCopy.tripTitle = '(' + itemCopy.tripTitle + ')';
                         } else {
                             itemCopy.tripTitle = '';
                         }
+                        
                         //console.log(itemCopy);
                         demands.sent.push(itemCopy);
                         added = true;
@@ -283,6 +316,14 @@ export default class Service
         })
     }
 
+    getdemandquotecount = (demandid) => {
+        return new Promise((resolve,reject)=>{
+            firebase.database().ref("/proposals/" + demandid).on("value",snapshot=>{
+                resolve(snapshot.numChildren());
+            })
+        })
+    }
+
     getalldemand = () => {
         return new Promise((resolve,reject)=>{
             AsyncStorage.getItem("user").then(value=>{
@@ -290,7 +331,7 @@ export default class Service
                 var myToday = new Date();
                 var today = +(new Date(myToday.getFullYear(), myToday.getMonth(), myToday.getDate(), 0, 0, 0));
                 var transporterId = user.uid;
-                firebase.database().ref("/demandas/").orderByChild("pickDayEnd").startAt(today).on("value",async(snapshot)=>{
+                firebase.database().ref("/demandas/").on("value",async(snapshot)=>{
                     let demands = {
                         confirmed:[],
                         sent:[],
@@ -302,12 +343,24 @@ export default class Service
                     snapshot.forEach(val=>{
                         let demand = val.val();
                         demand.id = val.key;
-                        list.push(demand);
+                        if(!Number.isNaN(Number(demand.pickDayIni)) && demand.status != "canceled" && demand.status != "refund" && (new Date(demand.pickDayIni).getTime() > today || (demand.pickDayEnd && new Date(demand.pickDayEnd).getTime() > today)))
+                        {
+                            list.push(demand);
+                        }
+                        
                     })
 
                     await this.dataservice.getcountries();
                     for(let item in list)
                     {
+                        if(list[item].routeid)
+                        {
+                            let routeitem = await this.getrouteitem(list[item].routeid);
+                            if(routeitem.uid != transporterId)
+                            {
+                                continue;
+                            }                            
+                        }
                         if(!list[item].desestimadas || list[item].desestimadas.indexOf(transporterId) < 0)
                         {
                             if(list[item].status == 'confirmed' &&  list[item].userTrans == transporterId)
@@ -318,7 +371,7 @@ export default class Service
                             }
                             else if(list[item].status == 'pending' && this.isItemInteresting(list[item],user))
                             {
-                                console.log(list[item]);
+                                
                                 let results = await this.parsedemand(list[item],transporterId);
                                 demands.pending = demands.pending.concat(results.pending);
                                 demands.sent = demands.sent.concat(results.sent);
@@ -326,12 +379,14 @@ export default class Service
                         }
                     }
 
+                    console.log(demands);
                     resolve(demands);
                 })
                 
             })
         })
     }
+
 
     iterationCopy = (src) => {
         let target = {};
@@ -344,9 +399,19 @@ export default class Service
     }
     isItemInteresting = (item,user) => {
         if(!item.desestimadas || item.desestimadas.indexOf(user.uid) < 0) {
+            
             if(!user.interestedCountries) {
                 user.interestedCountries = [];
+                if(user.paises)
+                {
+                    for(let item in user.paises)
+                    {
+                        user.interestedCountries.push(user.paises[item].iso2);
+                    }
+                }
             }
+
+            
             if(user.interestedCountries.indexOf(item.pickCountry) >= 0 || user.interestedCountries.indexOf(item.deliverCountry) >= 0) {
                 return true;
             } else {
@@ -367,6 +432,32 @@ export default class Service
             firebase.database().ref("/demandas/" + item).on("value",snapshot=>{
                 console.log(snapshot.val());
                 resolve(snapshot.val());
+            })
+        })
+    }
+
+    rejectdemand = (data,demandid,user) => {
+        return new Promise((resolve,reject)=>{
+            if(!data.desestimadas)
+            {
+                data.desestimadas = [];
+            }
+
+            if(data.desestimadas.indexOf(user.uid) > -1)
+            {
+                data.desestimadas.push(user.uid);
+            }
+
+            firebase.database().ref("/demandas/" + demandid).set(data).then(res=>{
+                resolve(true);
+            })
+        })
+    }
+
+    deletequote = (demandid,proposalid) => {
+        return new Promise((resolve,reject)=>{
+            firebase.database().ref("/proposals/" + demandid + "/" + proposalid).remove().then(res=>{
+                resolve(res);
             })
         })
     }
@@ -465,14 +556,9 @@ export default class Service
         return new Promise((resolve,reject)=>{
             AsyncStorage.getItem("user").then(user=>{
                 user = JSON.parse(user);
-                let senddata = {
-                    "personalizations": [{"to": [{"email": "info@veryhorse.com"}]}],"from": {"email": user.email},"subject": title,"content": [{"type": "text/html", "value": '<html><body><div><strong>User : ' + user.name + '</strong></div><div><strong>User Email : ' + user.email + '</strong></div><div><strong>Price : ' + parseFloat(Util.demandamount(proposal.amount)) + '€ </strong> </div><div><strong>Vehicle : ' + proposal.vehicle + '</strong></div><div><p>' + description +'</p></div></body></html>'}]}
-                axios.post('https://api.sendgrid.com/v3/mail/send',senddata,{
-                    headers:{
-                        'Authorization':"Bearer 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",
-					    "Content-Type":"application/json"
-                    }
-                }).then(function(){
+                let senddata = 
+                   {"to": "info@veryhorse.com","from": user.email,"subject": title,"content": '<html><body><div><strong>User : ' + user.name + '</strong></div><div><strong>User Email : ' + user.email + '</strong></div><div><strong>Price : ' + parseFloat(Util.demandamount(proposal.amount)) + '€ </strong> </div><div><strong>Vehicle : ' + proposal.vehicle + '</strong></div><div><p>' + desc +'</p></div></body></html>'}
+                axios.get("http://admin.veryhorse.com/php/send.php",{params:{data:JSON.stringify(senddata),action:"ask_carrier"}}).then(function(){
                     resolve(true);
                 })
             })
@@ -482,14 +568,33 @@ export default class Service
 
     sendproposal = (demandid,demand,data) => {
         return new Promise((resolve,reject)=>{
-            firebase.database().ref("/proposals/" + demandid).push(data).then(function(){
-                axios.get('http://admin.veryhorse.com/php/send.php',{params:{
-                    data:JSON.stringify({user:demand.user,demand:demandid,proposal:data,amount:Util.demandamount(proposal.amount)}),
-                    action:'send_new_offer'
-                }}).then(function(){
+            if(data.id)
+            {
+                let proposalitem = {};
+                for(item in data)
+                {
+                    if(item != 'id')
+                    {
+                        proposalitem[item] = data[item];
+                    }
+                }
+
+                firebase.database().ref("/proposals/" + demandid + "/" + data.id).set(proposalitem).then(function(){
                     resolve(true);
                 })
-            })
+            }
+            else
+            {
+                firebase.database().ref("/proposals/" + demandid).push(data).then(function(){
+                    axios.get('http://admin.veryhorse.com/php/send.php',{params:{
+                        data:JSON.stringify({user:demand.user,demand:demandid,proposal:data,amount:Util.demandamount(data.amount)}),
+                        action:'send_new_offer'
+                    }}).then(function(){
+                        resolve(true);
+                    })
+                })
+            }
+            
         })
     }
 
@@ -505,28 +610,138 @@ export default class Service
         })       
     }
 
+    getroutecount = (routeid) => {
+        return new Promise((resolve,reject)=>{
+            firebase.database().ref("/demandas").orderByChild("routeid").equalTo(routeid).on("value",snapshot=>{
+                let count = 0;
+                snapshot.forEach(value=>{
+                    let demand = value.val();
+                    if(demand.status != "canceled")
+                    {
+                        count ++;
+                    }
+                })
+
+
+                resolve(count);
+            })
+        })
+    }
+
+
     getmyroute = (state) => {
         return new Promise((resolve,reject)=>{
             AsyncStorage.getItem("user").then(value=>{
+                var today = new Date();
                 let user = JSON.parse(value);
-                firebase.database().ref("/routes/" + user.uid).on("value",snapshot=>{
-                    let list = [];
-                    if(snapshot.exists())
-                    {
-                        snapshot.forEach(route=>{
-                            route = route.val();
-                            if(route.state == state)
+                if(user.type == 'transportista')
+                {
+                    console.log(user.uid);
+                    firebase.database().ref("/routes").orderByChild("uid").equalTo(user.uid).on("value",async(snapshot)=>{
+                        let list = [];
+                        if(snapshot.exists())
+                        {
+                            snapshot.forEach(route=>{
+                                let routedata = route.val();
+                                let today = new Date();
+                                routedata.id = route.key;
+                                if(routedata.status == state && new Date(routedata.pickDayIni).getTime() > new Date(today.getFullYear(),today.getMonth(),today.getDate(),0,0,0).getTime())
+                                {
+                                    list.push(routedata);
+                                }
+                            })
+
+                            console.log(list);
+                            for(let item in list)
                             {
-                                list.push(route);
+                                list[item].count = await this.getroutecount(list[item].id);
                             }
-                        })
-                    }
-                    else
-                    {
-                        return [];
-                    }
+                            console.log(list);
+                            resolve(list);
+                        }
+                        else
+                        {
+                            resolve([])
+                        }
+                    })
+                }
+                else
+                {
+                    firebase.database().ref("/routes").orderByChild('pickDayIni').startAt(Moment(today).format('YYYY-MM-DD')).on("value",snapshot=>{
+                        let list = [];
+                        if(snapshot.exists())
+                        {
+                            snapshot.forEach(route=>{
+                                let routedata = route.val();
+                                let today = new Date();
+                                routedata.id = route.key;
+                                console.log(routedata);
+                                if(routedata.status == state)
+                                {
+                                    list.push(routedata);
+                                }
+                            })
+                            
+                            resolve(list);
+                        }
+                        else
+                        {
+                            resolve([])
+                        }
+                    })
+                }
+            })
+        })
+    }
+
+    createroute = (data,callback) => {
+        AsyncStorage.getItem("user").then(user=>{
+            user = JSON.parse(user);
+            data.uid = user.uid;
+            data.status = "pending";
+            firebase.database().ref("routes").push(data).then(result=>{
+                callback({success:true})
+            })
+        })
+    }
+
+    getrouteitem = (routeid) => {
+        return new Promise((resolve,reject)=>{
+            firebase.database().ref("routes/" + routeid).on("value",snapshot=>{
+                let data = snapshot.val();
+                data.id = snapshot.key;
+                resolve(data);
+            })
+        })
+    }
+
+    getdemandfromroute = (routeid) => {
+        return new Promise((resolve,reject)=>{
+            AsyncStorage.getItem("user").then(user=>{
+                let useritem = JSON.parse(user);
+                firebase.database().ref("demandas").orderByChild("routeid").equalTo(routeid).on("value",snapshot=>{
+                    let list = [];
+                    snapshot.forEach(value=>{
+                        let demand = value.val();
+                        demand.id = value.key;
+                        console.log(demand.status);
+                        if(demand.status != "canceled" && (demand.user = useritem.uid || useritem.type == 'transportista'))
+                        {
+                            list.push(demand);
+                        }
+                    })
+                    
+                    console.log(list);
+                    resolve(list);
                 })
             })
+           
+        })
+    }
+
+    deleteroute = (routeid,callback) => {
+        firebase.database().ref("routes/" + routeid).remove().then(res=>{
+            callback(true);
         })
     }
 } 

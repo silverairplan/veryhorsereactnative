@@ -43,9 +43,13 @@ class Proposalitem extends React.Component
         let service = new Service();
         service.getdemanditem(demandid).then(async(result)=>{
             let proposal = await service.getproposalitem(demandid,proposalid);
+            
+            
             let transportista = await service.gettransportista(proposal.transportista);
+            
+            
             let rating = 0;
-            if(transportista.valoraciones)
+            if(transportista && transportista.valoraciones)
             {
                 let grade = 0;
                 for(let item in transportista.valoraciones)
@@ -61,7 +65,7 @@ class Proposalitem extends React.Component
                 data:result,
                 proposal:proposal,
                 rating:rating,
-                transportista:transportista
+                transportista:transportista?transportista:{}
             })
         })
 
@@ -71,8 +75,10 @@ class Proposalitem extends React.Component
         const {intlData} = this.props;
         let ask_desc = this.state.ask_description;
         let service = new Service();
-        service.sendemail(this.state.proposal,ask_desc,intlData.messages['ASK_CARRIER']).then(function(){
-            this.props.navigation.navigate("AskPending");
+
+        let self = this;
+        service.sendmail(this.state.proposal,ask_desc,intlData.messages['ASK_CARRIER']).then(function(){
+            self.props.navigation.navigate("AskPending");
         })
     }
 
@@ -93,16 +99,16 @@ class Proposalitem extends React.Component
         switch(data[type + "Mod"])
         {
             case 'before':
-                string = intlData.messages['ANTES_DIA'] + " "  + Moment(new Date(data[type + "DayIni"])).format('DD-MM-YYYY');
+                string = intlData.messages['ANTES_DIA'] + " "  + Moment(new Date(Number(data[type + "DayIni"]))).format('DD-MM-YYYY');
                 break;
             case 'after':
-                string = intlData.messages['DESPUES'] + " " + Moment(new Date(data[type + "DayIni"])).format('DD-MM-YYYY');
+                string = intlData.messages['DESPUES'] + " " + Moment(new Date(Number(data[type + "DayIni"]))).format('DD-MM-YYYY');
                 break;
             case 'day':
-                string = Moment(new Date(data[type + "DayIni"])).format('DD-MM-YYYY')
+                string = Moment(new Date(Number(data[type + "DayIni"]))).format('DD-MM-YYYY')
                 break;
             case 'between':
-                string = intlData.messages['ENTRE'] + " " + Moment(new Date(data[type + "DayIni"])).format('DD-MM-YYYY') + " " + intlData.messages['Y_EL'] + " " + Moment(new Date(data[type + "DayIni"])).format('DD-MM-YYYY');
+                string = intlData.messages['ENTRE'] + " " + Moment(new Date(Number(data[type + "DayIni"]))).format('DD-MM-YYYY') + " " + intlData.messages['Y_EL'] + " " + Moment(new Date(Number(data[type + "DayIni"]))).format('DD-MM-YYYY');
                 break;
         }
 
@@ -329,7 +335,7 @@ class Proposalitem extends React.Component
     desestimar = () => {
         let service = new Service();
         let self = this;
-        service.desestimar(this.props.navigation.state.params.demandid,this.props.navigation.state.params.proposalid,this.state.demand,this.state.proposal,function(){
+        service.desestimar(this.props.navigation.state.params.demandid,this.props.navigation.state.params.proposalid,this.state.data,this.state.proposal,function(){
             self.props.navigation.goBack();
         })
     }
@@ -348,7 +354,7 @@ class Proposalitem extends React.Component
                             {
                                 this.state.proposal.altDelDay && (
                                     <Text style={style.description}>
-                                        {Moment(this.state.proposal.altDelDay).format('DD-MM-YYYY')} - {this.state.data.pickCityName}, {this.state.data.pickCP} ({this.state.data.pickCountryName})
+                                        {Moment(new Date(Number(this.state.proposal.altDelDay))).format('DD-MM-YYYY')} - {this.state.data.pickCityName}, {this.state.data.pickCP} ({this.state.data.pickCountryName})
                                     </Text>
                                 )
                             }
@@ -363,7 +369,7 @@ class Proposalitem extends React.Component
                             {
                                 this.state.proposal.altDelDay && (
                                     <Text style={style.description}>
-                                        {Moment(this.state.proposal.altDelDay).format('DD-MM-YYYY')} - {this.state.data.deliverCityName}, {this.state.data.deliverCP} ({this.state.data.deliverCountryName})
+                                        {Moment(new Date(Number(this.state.proposal.altDelDay))).format('DD-MM-YYYY')} - {this.state.data.deliverCityName}, {this.state.data.deliverCP} ({this.state.data.deliverCountryName})
                                     </Text>
                                 )
                             }
@@ -383,7 +389,7 @@ class Proposalitem extends React.Component
                         </View>
                         <View style={style.itemgroup}>
                             <Text style={style.label}>{intlData.messages['EQUIPAJE']}</Text>
-                            <Text style={style.description}>{this.state.data.lugage?this.state.data.lugageDesc:"No"}</Text>
+                            <Text style={style.description}>{Number(this.state.data.lugage)?this.state.data.lugageDesc:"No"}</Text>
                         </View>
                     </View>
                     <View style={style.proposalcontent}>
@@ -393,7 +399,7 @@ class Proposalitem extends React.Component
                         </View>
                         <View style={style.itemgroup}>
                             <Text style={style.label}>{intlData.messages['PRECIO2']}</Text>
-                            <Text style={style.description}>{Util.payamount(this.state.proposal.amount)}</Text>
+                            <Text style={style.description}>{Util.payamount(this.state.proposal.amount)} €</Text>
                             <Text style={{fontSize:hp('1.9%'),...style.description}}>{intlData.messages['PROPOSAL_DISCLOUSURE']}</Text>
                         </View>
                         <View style={style.itemgroup}>

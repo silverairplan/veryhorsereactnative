@@ -145,12 +145,22 @@ export default {
     OLVIDO: '¿Olvidó su contraseña?',
     ONLY_NUMBERS: 'Únicamente números',
     OWNER:"Propietarios",
-    Route:"Ruta",
-
-
+    MYRoute:"Mi ruta",
+	NewRoute:"Nueva ruta",
+	STARTING_POINT:"Punto de partida",
+	POINT_ARRIVAL:"Punto de llegada",
+	DATE_DEPARTURE:"Fecha de salida",
+    DATE_ARRIVAL:"Fecha de llegada",
+    CREATEROUTE:"crear ruta",
+    ANULAR_ROUTE:"Cancelar Ruta",
+    Route:"RUTAS",
+    ROUTETITLE:"Listado de Rutas de los transportistas.",
+    ROUTEDESC:"Escoga la ruta de su interés y haga una demanda de traslado.\n    Recibirá la cotización del transportista",
+    DEPARTURE:"Salida",
+    Arrival:"Llegada",
     RESPONSABLE: 'Responsable',
-
-
+    NEWDEMANDROUTE:"Crea una demanda para esta ruta",
+    AREA_T:"Area de transporte",
     PAGO_VERY: 'Pago VeryHorse',
     ERROR_PAGO: 'Ha ocurrido un error desconocido y el pago no ha podido procesarse',
     ERROR_T: 'Error en la tarjeta',

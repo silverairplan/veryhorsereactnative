@@ -26,7 +26,7 @@ class ForgotPassword extends React.Component
     forgotpassword = () => {
         let userservice = new UserService();
         let self = this;
-        if(this.state.sending)
+        if(!this.state.sending)
         {
             this.setState({
                 sending:true

@@ -128,20 +128,21 @@ android {
     }
 
     defaultConfig {
+        //applicationId "com.veryhorsereactnative"
         applicationId "com.ionicframework.veryhorse402802"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10300
-        versionName "2.0"
+        versionCode 10420
+        versionName "2.1.4"
         multiDexEnabled true
     }
      signingConfigs {
         release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
-                storeFile file(MYAPP_UPLOAD_STORE_FILE)
-                storePassword MYAPP_UPLOAD_STORE_PASSWORD
-                keyAlias MYAPP_UPLOAD_KEY_ALIAS
-                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+                storeFile file('debug.keystore')
+	            storePassword 'VeHoProject16'
+	            keyAlias 'alias_name'
+	            keyPassword 'VeHoProject16'
             }
         }
     }
@@ -191,6 +192,7 @@ android {
 
 
 dependencies {
+    implementation project(':react-native-version-number')
     implementation project(':react-native-paypal-wrapper')
     implementation project(':@react-native-community_geolocation')
     implementation project(':react-native-reanimated')

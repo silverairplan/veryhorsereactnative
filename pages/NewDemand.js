@@ -42,6 +42,7 @@ class NewDemand extends React.Component
 
     nextstep = () => {
         let step = this.state.step;
+        console.log(this.props.navigation.state.params);
         if(this.validate(step))
         {
             if(step == 7)
@@ -51,17 +52,36 @@ class NewDemand extends React.Component
                 this.setState({
                     sending:true
                 })
-                service.createdemand(this.state.data,function(result){
-                    self.setState({
-                        step:8,
-                        sending:false
-                    })
+
+                let data = this.state.data;
+                if(this.props.navigation.state.params && this.props.navigation.state.params.routeid)
+                {
+                    data.routeid = this.props.navigation.state.params.routeid;
+                }
+
+                
+                service.createdemand(data,function(result){
+                    if(self.props.navigation.state.params && self.props.navigation.state.params.routeid)
+                    {
+                        self.props.navigation.goBack();
+                    }
+                    else
+                    {
+                        self.setState({
+                            step:8,
+                            sending:false
+                        })
+                    }
                 })
             }
-            step = Math.min(this.state.step + 1,9);
-            this.setState({
-                step:step
-            })
+            else
+            {
+                step = Math.min(this.state.step + 1,9);
+                this.setState({
+                    step:step
+                })
+            }
+            
         }
     }
 
@@ -140,7 +160,7 @@ class NewDemand extends React.Component
                     enable = false;
                 }
                 break;
-            case 3:
+            case 2:
                 if(!data.pickDayIni)
                 {
                     error.pickDayIni = intlData.messages['OBLIGATORIO'];
@@ -156,7 +176,7 @@ class NewDemand extends React.Component
                     }
                 }
                 break;
-            case 4:
+            case 3:
                 if(!data.deliverCity)
                 {
                     error.deliverCity = intlData.messages['OBLIGATORIO'];

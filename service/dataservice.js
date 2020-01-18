@@ -30,7 +30,7 @@ export default class DataService
                 resolve(data);
             })
         })
-    }
+    } 
 
     getContinentFromISO = (iso) =>{
         var country = this.getCountryByISO(iso);

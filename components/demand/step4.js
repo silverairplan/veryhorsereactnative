@@ -17,7 +17,7 @@ class Step4 extends React.Component
             <View style={style.form}>
                 <View style={style.upform}>
                     <View style={style.formgroup}>
-                        <Text style={style.label}>{intlData.messages['DIRECCION_RECOGIDA']} *:</Text>
+                        <Text style={style.label}>{intlData.messages['NUMERO_C2']} *:</Text>
                         <NumericInput style={style.input} rounded={true} valueType="integer" minValue={1} maxValue={99} value={this.props.data.numHorses} onChange={(value)=>this.props.handleChange("numHorses",value)} inputStyle={style.numberinput}></NumericInput>
                         {
                             this.props.error.numHorses != undefined && (
