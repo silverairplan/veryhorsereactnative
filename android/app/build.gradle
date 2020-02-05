@@ -128,12 +128,12 @@ android {
     }
 
     defaultConfig {
-        //applicationId "com.veryhorsereactnative"
-        applicationId "com.ionicframework.veryhorse402802"
+        applicationId "com.veryhorsereactnative"
+        //applicationId "com.ionicframework.veryhorse402802"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10420
-        versionName "2.1.4"
+        versionCode 10446
+        versionName "2.2.7"
         multiDexEnabled true
     }
      signingConfigs {

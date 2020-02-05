@@ -476,7 +476,7 @@ class MyDemandItem extends React.Component
                 </Modal>
                 <Modal
                      visible={this.state.deletequote} 
-                     modalTitle={<ModalTitle title={this.state.proposalitem.id}></ModalTitle>}
+                     modalTitle={<ModalTitle title={intlData.messages['DELETE_QUOTE']}></ModalTitle>}
                      footer={<ModalFooter><ModalButton style={style.btn} text={intlData.messages['SI']} textStyle={style.description} onPress={()=>this.deletequote()}></ModalButton><ModalButton text={intlData.messages['NO']} onPress={()=>this.setState({deletequote:false})}></ModalButton></ModalFooter>}
                      onTouchOutside={()=>this.setState({deletequote:false})}
                 >
@@ -532,7 +532,8 @@ const style = StyleSheet.create({
     },
     confirmText:{
         fontSize:hp('2.3%'),
-        fontWeight:'bold'
+        fontWeight:'bold',
+        textAlign:'center'
     },
     item:{
         backgroundColor:'#FFF',

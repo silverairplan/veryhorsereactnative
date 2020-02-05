@@ -119,6 +119,10 @@ class Navigator extends React.Component
             {
                user = JSON.parse(user);
                
+               if(user.type == 'carrier')
+               {
+                   user.type = 'transportista';
+               }
                this.setState({
                     type:user.type
                 })

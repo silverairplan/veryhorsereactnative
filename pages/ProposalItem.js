@@ -181,16 +181,19 @@ class Proposalitem extends React.Component
         let service = new Service();
         service.savepaymentsuccessdemand(demand,self.props.navigation.state.params.demandid).then(function(result){
             service.addpending(demand,{transportista:self.state.proposal.transportista,transportistaname:self.state.transportista.name_empresa}).then(function(result){
+                Alert.alert(intlData.messages['PAGO_REALIZADO'],intlData.messages['TEXTO_PAGO_REALIZADO'])                
                 self.props.navigation.goBack();
             })
         })
     }
-
+    
     sendpayment = () => {
         const {intlData} = this.props;
+        Paypal.initialize(Paypal.PRODUCTION,config.PayPalEnvironmentProduction);
         Paypal.initialize(Paypal.SANDBOX,config.PayPalEnvironmentSandbox);
         let amountpaid = parseFloat(Util.payamount(this.state.proposal.amount)).toFixed().toString();
         let self = this;
+        console.log("errr");
         Paypal.pay({
             price:amountpaid,
             currency:'EUR',
@@ -198,7 +201,7 @@ class Proposalitem extends React.Component
         }).then(confirm=>{
             self.paymentcompleted(amountpaid);
 
-        }).catch(err=>Alert.alert("Error",intlData.messages['ERROR_PAGO']));
+        }).catch(err=>{console.log(err);Alert.alert("Error",intlData.messages['ERROR_PAGO'])});
     }
 
     showreservar = () => {
@@ -264,22 +267,25 @@ class Proposalitem extends React.Component
                 publishableKey:config.STRIPKEY
             })
 
+            console.log(carddetail);
             let amountPaid = Util.payamount(this.state.proposal.amount);
+            let self = this;
             Strip.createTokenWithCard(carddetail).then(token=>{
+                console.log(token);
                 self.setState({
                     loading:false,
                     strip:false
                 })
                 var payment = {
-                    token:token,
+                    token:token.tokenId,
                     price:amountPaid
                 }
 
                 let service = new Service();
                 service.payforstripe(payment,function(data){
-                    if(data.status == 'succeeded')
+                    if(data.status != "error")
                     {
-
+                        self.paymentcompleted(data.paidAmount);
                     }
                     else
                     {
@@ -294,12 +300,13 @@ class Proposalitem extends React.Component
                     }
                 })
             }).catch(err=>{
+                console.log(err);
                 self.setState({
                     loading:false,
                     strip:false
                 })
 
-                Alert.alert('Error',intlData.messages['ERROR_PAGO']);
+                Alert.alert('Error',err.message);
             })
 
         }

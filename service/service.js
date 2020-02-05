@@ -235,7 +235,6 @@ export default class Service
             firebase.database().ref("/demandas").push(data).then(function(ref){
                 
                 let senddata = {demand:ref.key,pickCountry:data.pickCountry,deliverCountry:data.deliverCountry,pickCity:data.pickCity,deliverCity:data.deliverCity};
-                console.log(ref.key);
                 axios.get('http://admin.veryhorse.com/php/send.php',{params:{data:JSON.stringify(senddata),action:"send_new_demand"}}).then(res=>{
                     console.log(res);
                 })
@@ -248,7 +247,6 @@ export default class Service
     
 
     getdemand = (status) => {
-        console.log(status);
         return new Promise((resolve,reject)=>{
             AsyncStorage.getItem("user").then(value=>{
                 let user = JSON.parse(value);
@@ -257,7 +255,6 @@ export default class Service
                
                 firebase.database().ref("/demandas/").orderByChild("user").equalTo(user.uid).on("value",async(snapshot)=>{
                     let array = [];
-                    console.log(today);
                     snapshot.forEach(function(item){
                         let data = item.val();
                         data.id = item.key;
@@ -331,6 +328,7 @@ export default class Service
                 var myToday = new Date();
                 var today = +(new Date(myToday.getFullYear(), myToday.getMonth(), myToday.getDate(), 0, 0, 0));
                 var transporterId = user.uid;
+                console.log(transporterId);
                 firebase.database().ref("/demandas/").on("value",async(snapshot)=>{
                     let demands = {
                         confirmed:[],
@@ -379,7 +377,6 @@ export default class Service
                         }
                     }
 
-                    console.log(demands);
                     resolve(demands);
                 })
                 
@@ -430,7 +427,6 @@ export default class Service
     getdemanditem = (item) => {
         return new Promise((resolve,reject)=>{
             firebase.database().ref("/demandas/" + item).on("value",snapshot=>{
-                console.log(snapshot.val());
                 resolve(snapshot.val());
             })
         })
@@ -442,11 +438,14 @@ export default class Service
             {
                 data.desestimadas = [];
             }
+            console.log("reject");
+            console.log("reject",data.desestimadas);
 
-            if(data.desestimadas.indexOf(user.uid) > -1)
+            if(data.desestimadas.indexOf(user.uid) == -1)
             {
                 data.desestimadas.push(user.uid);
             }
+            console.log("reject",data.desestimadas);
 
             firebase.database().ref("/demandas/" + demandid).set(data).then(res=>{
                 resolve(true);
@@ -536,8 +535,10 @@ export default class Service
     payforstripe = (data,callback) => {
         axios.post(apiurl + "/reservation-payment",data).then(function(res){
             callback(res.data);
-        })
+        })    
     }
+
+    
 
     desestimar = (demandid,proposalid,demand,proposal,callback) => {
         proposal.desestimada = true;
@@ -636,7 +637,6 @@ export default class Service
                 let user = JSON.parse(value);
                 if(user.type == 'transportista')
                 {
-                    console.log(user.uid);
                     firebase.database().ref("/routes").orderByChild("uid").equalTo(user.uid).on("value",async(snapshot)=>{
                         let list = [];
                         if(snapshot.exists())
@@ -651,12 +651,10 @@ export default class Service
                                 }
                             })
 
-                            console.log(list);
                             for(let item in list)
                             {
                                 list[item].count = await this.getroutecount(list[item].id);
                             }
-                            console.log(list);
                             resolve(list);
                         }
                         else
@@ -675,7 +673,6 @@ export default class Service
                                 let routedata = route.val();
                                 let today = new Date();
                                 routedata.id = route.key;
-                                console.log(routedata);
                                 if(routedata.status == state)
                                 {
                                     list.push(routedata);
@@ -724,14 +721,12 @@ export default class Service
                     snapshot.forEach(value=>{
                         let demand = value.val();
                         demand.id = value.key;
-                        console.log(demand.status);
                         if(demand.status != "canceled" && (demand.user = useritem.uid || useritem.type == 'transportista'))
                         {
                             list.push(demand);
                         }
                     })
                     
-                    console.log(list);
                     resolve(list);
                 })
             })
