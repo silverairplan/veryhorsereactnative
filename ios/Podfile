@@ -1,7 +1,11 @@
 platform :ios, '9.0'
+  pod 'PayPal-iOS-SDK'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 target 'veryhorsereactnative' do
+	
+  pod 'Stripe', '~> 14.0.0'
+
   # Pods for veryhorsereactnative
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
@@ -45,6 +49,7 @@ target 'veryhorsereactnative' do
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
 
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
