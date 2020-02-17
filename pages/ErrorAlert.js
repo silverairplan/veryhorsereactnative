@@ -3,7 +3,7 @@ import {View,StyleSheet} from 'react-native';
 import Modal,{ModalTitle,ModalButton,ModalFooter,ModalContent} from 'react-native-modals';
 import HTML from 'react-native-render-html';
 import connect from '../components/connectedcomponent';
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp,widthPercentageToDP as wp} from 'react-native-responsive-screen';
 class ErrorAlert extends React.Component
 {
     constructor(props)
