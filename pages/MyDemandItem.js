@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,StyleSheet,Text,TouchableOpacity,AsyncStorage} from 'react-native';
+import {View,StyleSheet,Text,TouchableOpacity,AsyncStorage,Image} from 'react-native';
 import PageService from '../service/service';
 import config from '../config/config';
 import PageContainer from '../components/PageContainer';
@@ -45,7 +45,10 @@ class MyDemandItem extends React.Component
             myproposal:false,
             proposalsent:false,
             proposalitem:{},
-            error:{}
+            error:{},
+            acceptedproposal:{},
+            acceptedtransportista:{},
+            accepteduser:{}
         }
     }
 
@@ -59,6 +62,24 @@ class MyDemandItem extends React.Component
             user = JSON.parse(user);
             service.getdemanditem(demandid).then(async(demand)=>{
                 let proposal = await service.getproposal(demandid);
+                let acceptedproposal = {};
+                let acceptedtransportista = {};
+                let accepteduser = {};
+                if(demand.acceptedProposal && demand.status == 'confirmed')
+                {
+                    acceptedproposal = await service.getproposalitem(demandid,demand.acceptedProposal);
+                    if(user.type == 'transportista')
+                    {
+                        accepteduser = await service.gettransportista(demand.user);
+                    }
+                    else
+                    {
+                        acceptedtransportista = await service.gettransportista(demand.userTrans);
+                    }
+                }
+
+                console.log(acceptedtransportista);
+
                 let myproposal = false;
                 let proposalitem = {};
                 for(let item in proposal)
@@ -76,7 +97,10 @@ class MyDemandItem extends React.Component
                     proposal:proposal,
                     user:user,
                     myproposal:myproposal,
-                    proposalitem:proposalitem
+                    proposalitem:proposalitem,
+                    acceptedproposal:acceptedproposal,
+                    acceptedtransportista:acceptedtransportista,
+                    accepteduser:accepteduser
                 })
     
                 let origin = await self.getlocation(demand.pickCity);
@@ -240,6 +264,60 @@ class MyDemandItem extends React.Component
         return this.state.user && this.state.user.type === "transportista";
     }
 
+    rendertrans = () => {
+        const {intlData} = this.props;
+        return (
+            <View style={style.groupitem}>
+                <Text style={style.label}>{intlData.messages['DATOS']}</Text>
+                <View style={{flexDirection:'row',...style.groupitem}}>
+                    <Text style={style.label}>{intlData.messages['NOMBRE_E']} : <Text style={style.description}>{this.state.acceptedtransportista.name_empresa}</Text></Text>
+                </View>
+                <View style={{flexDirection:'row',...style.groupitem}}>
+                    <Text style={style.label}>Email : <Text style={style.description}>{this.state.acceptedtransportista.email}</Text></Text>
+                </View>
+                <View style={{flexDirection:'row',...style.groupitem}}>
+                    <Text style={style.label}>{intlData.messages['IDIOMA']} : <Text style={style.description}>{this.state.acceptedtransportista.idioma}</Text></Text>
+                </View>
+                {
+                    this.state.acceptedproposal.vehicle > 0 && (
+                        <View style={style.groupitem}>
+                            <Text style={style.label}>{intlData.messages['VEHICULO']} :</Text>
+                            <Image source={this.vehicle[this.state.acceptedproposal.vehicle - 1].image}></Image>
+                        </View>
+                    )
+                }
+                <View style={{flexDirection:'row',...style.groupitem}}>
+                    <Text style={style.label}>{intlData.messages['DIRECCION']} : <Text style={style.description}>{this.state.acceptedtransportista.address}</Text></Text>
+                </View>
+                <View style={{flexDirection:'row',...style.groupitem}}>
+                    <Text style={style.label}>{intlData.messages['POBLACION']} : <Text style={style.description}>{this.state.acceptedtransportista.town}</Text></Text>
+                </View>
+                <View style={{flexDirection:'row',...style.groupitem}}>
+                    <Text style={style.label}>CP : <Text style={style.description}>{this.state.acceptedtransportista.cp}</Text></Text>
+                </View>
+                <View style={{flexDirection:'row',...style.groupitem}}>
+                    <Text style={style.label}>{intlData.messages['PAIS']} : <Text style={style.description}>{this.state.acceptedtransportista.country}</Text></Text>
+                </View>
+                {
+                    (this.state.acceptedtransportista.phoneFix != undefined && this.state.acceptedtransportista.phoneFix != "") && (
+                        <View style={{flexDirection:'row',...style.groupitem}}>
+                            <Text style={style.label}>{intlData.messages['TELEFONO_F']} : <Text style={style.description}>{this.state.acceptedtransportista.prefixFix} - {this.state.acceptedtransportista.phoneFix}</Text></Text>
+                        </View>
+                    )
+                }
+                <View style={{flexDirection:'row',...style.groupitem}}>
+                    <Text style={style.label}>{intlData.messages['TELEFONO_M']} : <Text style={style.description}>{this.state.acceptedtransportista.prefixMob} - {this.state.acceptedtransportista.phoneMob}</Text></Text>
+                </View>
+                {
+                    (this.state.acceptedtransportista.web != undefined && this.state.acceptedtransportista.web != "") && (
+                        <View style={{flexDirection:'row',...style.groupitem}}>
+                            <Text style={style.label}>Web : <Text style={style.description}>{this.state.acceptedtransportista.web}</Text></Text>
+                        </View> 
+                    )
+                }
+            </View>
+        )
+    }
     desetimar = () => {
         let service = new Service();
         let self = this;
@@ -445,13 +523,77 @@ class MyDemandItem extends React.Component
                         )
                     }
                     {
-                        !this.isTrans() && (
+                        (!this.isTrans() && this.state.data.status == "pending") && (
                             <View style={style.groupitem}>
                                 <TouchableOpacity style={style.btn}><Text style={{textAlign:'center',...style.description}} onPress={this.showconfirm}>{intlData.messages['ANULAR_DEMANDA']}</Text></TouchableOpacity>
                             </View>
                         )
                     }
-                    
+                    {
+                        (this.state.data.status == 'confirmed') && (
+                            <View style={style.groupitem}>
+                               <Text style={style.label}>{intlData.messages['PRECIO']}</Text>
+                               <View style={{marginTop:hp('3%'),...style.groupitem}}>
+                                    <Text style={style.label}>{intlData.messages['PRECIO4']} : <Text style={style.description}>{Util.demandamount(this.state.acceptedproposal.amount)} €</Text></Text>         
+                                </View>
+                                <View style={{flexDirection:'row',...style.groupitem}}>
+                                    <Text style={style.label}>{intlData.messages['PAGO']} : <Text style={style.description}>{Util.payamount(this.state.acceptedproposal.amount)} €</Text></Text>
+                                </View>
+                                <View style={{flexDirection:'row',...style.groupitem}}>
+                                    <Text style={style.label}>{intlData.messages['PAGO2']} : <Text style={style.description}>{this.state.acceptedproposal.amount} €</Text></Text>
+                                </View>
+                                {
+                                    this.state.acceptedproposal.altPicDay && (
+                                        <View style={style.groupitem}>
+                                            <Text style={style.label}>{intlData.messages['PROPUESTA2']} : <Text style={style.description}>{Moment(new Date(this.state.acceptedproposal.altPicDay)).format('DD-MM-YYYY')}</Text></Text>
+                                        </View>
+                                    )
+                                }
+                                {
+                                    this.state.acceptedproposal.altDelDay && (
+                                        <View style={style.groupitem}>
+                                            <Text style={style.label}>{intlData.messages['PROPUESTA3']} : <Text style={style.description}>{Moment(new Date(this.state.acceptedproposal.altDelDay)).format('DD-MM-YYYY')}</Text></Text>
+                                        </View>
+                                    )
+                                }
+                                {
+                                    !this.isTrans() && this.rendertrans()
+                                    
+                                }
+                                {
+                                    this.isTrans() && (
+                                        <View style={style.groupitem}>
+                                            <Text style={{fontSize:hp('2.5%'),...style.label}}>{intlData.messages['DATOS2']}</Text>
+                                            <View style={{flexDirection:'row',...style.groupitem}}>
+                                                <Text style={style.label}>{intlData.messages['NOMBRE']} :</Text>
+                                                <Text style={{marginLeft:wp('2%'),...style.description}}>{this.state.accepteduser.name} {this.state.accepteduser.lastname}</Text>
+                                            </View>
+                                            <View style={{flexDirection:'row',...style.groupitem}}>
+                                                <Text style={style.label}>{intlData.messages['DIRECCION']} :</Text>
+                                                <Text style={{marginLeft:wp('2%'),...style.description}}>{this.state.accepteduser.address} {this.state.accepteduser.cp} {this.state.accepteduser.town} {this.state.accepteduser.country}</Text>
+                                            </View>
+                                            {
+                                                (this.state.accepteduser.phoneFix != "" && this.state.accepteduser.phoneFix != undefined) && (
+                                                    <View style={{flexDirection:'row',...style.groupitem}}>
+                                                        <Text style={style.label}>{intlData.messages['DIRECCION']} :</Text>
+                                                        <Text style={{marginLeft:wp('2%'),...style.description}}>{this.state.accepteduser.address} {this.state.accepteduser.cp} {this.state.accepteduser.town} {this.state.accepteduser.country}</Text>
+                                                    </View>
+                                                )
+                                            }
+                                            <View style={{flexDirection:'row',...style.groupitem}}>
+                                                <Text style={style.label}>{intlData.messages['TELEFONO_M']} :</Text>
+                                                <Text style={{marginLeft:wp('2%'),...style.description}}>{this.state.accepteduser.prefixMob} {this.state.accepteduser.phoneMob}</Text>
+                                            </View>
+                                            <View style={{flexDirection:'row',...style.groupitem}}>
+                                                <Text style={style.label}>Email :</Text>
+                                                <Text style={{marginLeft:wp('2%'),...style.description}}>{this.state.accepteduser.email}</Text>
+                                            </View>
+                                        </View>
+                                    )
+                                }
+                            </View>
+                        )
+                    }
                 </View>
                <Modal
                      visible={this.state.confirm} 

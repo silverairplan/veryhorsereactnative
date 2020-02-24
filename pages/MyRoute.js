@@ -83,9 +83,9 @@ class MyRoute extends React.Component
                                 <TouchableOpacity style={this.state.tab == 'pending'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("pending")}>
                                     <Text style={this.state.tab == 'pending'?style.tabtext:style.tabinactivetext}>{intlData.messages['PENDIENTE']}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={this.state.tab== 'confirm'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("confirm")}>
+                                {/* <TouchableOpacity style={this.state.tab== 'confirm'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("confirm")}>
                                     <Text style={this.state.tab == 'confirm'?style.tabtext:style.tabinactivetext}>{intlData.messages['CONFIRMADAS']}</Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
                         )
                     }

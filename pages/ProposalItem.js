@@ -29,6 +29,7 @@ class Proposalitem extends React.Component
             ask_description:"",
             tos:false,
             error:false,
+            erroralert:false,
             strip:false,
             card:{},
             formerror:{},
@@ -160,6 +161,8 @@ class Proposalitem extends React.Component
     }
 
     paymentcompleted = (amountpaid) => {
+        const {intlData} = this.props;
+        let self = this;
         let demand = self.state.data;
         demand.status = "confirmed";
         demand.userTrans = self.state.proposal.transportista;
@@ -181,8 +184,11 @@ class Proposalitem extends React.Component
         let service = new Service();
         service.savepaymentsuccessdemand(demand,self.props.navigation.state.params.demandid).then(function(result){
             service.addpending(demand,{transportista:self.state.proposal.transportista,transportistaname:self.state.transportista.name_empresa}).then(function(result){
-                Alert.alert(intlData.messages['PAGO_REALIZADO'],intlData.messages['TEXTO_PAGO_REALIZADO'])                
-                self.props.navigation.goBack();
+                self.setState({
+                    loading:false,
+                    strip:false,
+                    erroralert:true
+                })
             })
         })
     }
@@ -191,7 +197,7 @@ class Proposalitem extends React.Component
         const {intlData} = this.props;
         Paypal.initialize(Paypal.PRODUCTION,config.PayPalEnvironmentProduction);
         Paypal.initialize(Paypal.SANDBOX,config.PayPalEnvironmentSandbox);
-        let amountpaid = parseFloat(Util.payamount(this.state.proposal.amount)).toFixed().toString();
+        let amountpaid = parseFloat(Util.payamount(this.state.proposal.amount)).toString();
         let self = this;
         console.log("errr");
         Paypal.pay({
@@ -219,6 +225,14 @@ class Proposalitem extends React.Component
             })
         }
         
+    }
+
+    close = () => {
+        this.setState({
+            erroralert:false
+        })
+
+        this.props.navigation.navigate("MYDEMAND");
     }
 
     reservar = async() => {
@@ -272,10 +286,6 @@ class Proposalitem extends React.Component
             let self = this;
             Strip.createTokenWithCard(carddetail).then(token=>{
                 console.log(token);
-                self.setState({
-                    loading:false,
-                    strip:false
-                })
                 var payment = {
                     token:token.tokenId,
                     price:amountPaid
@@ -285,7 +295,7 @@ class Proposalitem extends React.Component
                 service.payforstripe(payment,function(data){
                     if(data.status != "error")
                     {
-                        self.paymentcompleted(data.paidAmount);
+                        self.paymentcompleted(data.paidAmount / 100);
                     }
                     else
                     {
@@ -308,6 +318,8 @@ class Proposalitem extends React.Component
 
                 Alert.alert('Error',err.message);
             })
+
+            //this.paymentcompleted(amountPaid);
 
         }
         else
@@ -475,7 +487,6 @@ class Proposalitem extends React.Component
                                 </View>
                             )
                         }
-                        
                     </View>
                 </View>
                 <Modal 
@@ -547,6 +558,23 @@ class Proposalitem extends React.Component
                             </Text>
                         </View>
                     </ModalContent>
+                </Modal>
+
+                <Modal 
+                    visible={this.state.erroralert} 
+                    onTouchOutside={()=>this.close()}
+                    modalTitle={<ModalTitle title={intlData.messages['PAGO_REALIZADO']} style={style.paymenttitle}></ModalTitle>}
+                    footer={
+                        <ModalFooter>
+                            <ModalButton text={intlData.messages['CANCELAR']} style={{backgroundColor:'lightgrey'}} onPress={()=>this.close()}></ModalButton>
+                        </ModalFooter>
+                    }
+                    modalStyle={{margin:wp('2%')}}>
+                    <View style={{padding:wp('3%'),backgroundColor:'lightgrey'}}>
+                        <View style={{marginTop:hp('1%')}}>
+                            <HTML html={intlData.messages['TEXTO_PAGO_REALIZADO']}></HTML>
+                        </View>
+                    </View>
                 </Modal>
             </PageContainer>
         )

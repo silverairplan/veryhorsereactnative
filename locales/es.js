@@ -16,7 +16,7 @@ export default {
     ASUNTO: 'Asunto',
     ATENCION_USUARIO: 'ATENCIÓN AL USUARIO',
     ARE_YOU_SURE: '¿Está usted seguro de esto?',
-	ASK_CARRIER:"Pregunte al Transportisa",
+	ASK_CARRIER:"Pregunte al Transportista",
 	Send_Consult:"enviar consulta",
     //////////////////////   B  ///////////////////////////////////
 

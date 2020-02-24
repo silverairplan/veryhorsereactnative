@@ -53,8 +53,8 @@ class MyDemand extends React.Component
                         <TouchableOpacity style={this.state.tab == 'pending'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("pending")}>
                             <Text style={this.state.tab == 'pending'?style.tabtext:style.tabinactivetext}>{intlData.messages['PENDIENTE']}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={this.state.tab== 'confirm'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("confirm")}>
-                            <Text style={this.state.tab == 'confirm'?style.tabtext:style.tabinactivetext}>{intlData.messages['CONFIRMADAS']}</Text>
+                        <TouchableOpacity style={this.state.tab== 'confirmed'?style.tabitemactive:style.tabiteminactive} onPress={()=>this.settab("confirmed")}>
+                            <Text style={this.state.tab == 'confirmed'?style.tabtext:style.tabinactivetext}>{intlData.messages['CONFIRMADAS']}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{flex:1}}>

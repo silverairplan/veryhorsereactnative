@@ -38,7 +38,7 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
     }
-    
+
     configurations.all {
         resolutionStrategy {
             force 'com.facebook.android:facebook-android-sdk:4.22.1'

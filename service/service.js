@@ -470,9 +470,9 @@ export default class Service
     savepaymentsuccessdemand = (demand,demandid) => {
         return new Promise((resolve,reject)=>{
             firebase.database().ref("/demandas/" + demandid).set(demand).then(function(){
-                AsyncStorage.getItem("user",function(value){
+                AsyncStorage.getItem("user").then(function(value){
                     let user = JSON.parse(value);
-                    axios.get(apiurl + "/php/send.php",{
+                    axios.get("http://admin.veryhorse.com/php/send.php",{
                         params:{
                             data:JSON.stringify({demand:demandid,proposal:demand.acceptedProposal,transportista:demand.userTrans,user:user.uid}),
                             action:'send_offer_accepted'
@@ -481,7 +481,6 @@ export default class Service
 
                     resolve(true);
                 })
-                
             })
         })
     }
@@ -490,7 +489,7 @@ export default class Service
         return new Promise((resolve,reject)=>{
             let nowDate = new Date();
             var nowsecond = demand.deliverDayIni + (1000 * ((nowDate.getHours() * 3600) + (nowDate.getMinutes() * 60) + nowDate.getSeconds()));
-            firebase.database().ref("/pending_valoraciones/" + demand.user).add({
+            firebase.database().ref("/pending_valoraciones/" + demand.user).push({
                 date:nowsecond,
                 trans:data.transportista,
                 transname:data.transportistaname,
@@ -543,7 +542,7 @@ export default class Service
     desestimar = (demandid,proposalid,demand,proposal,callback) => {
         proposal.desestimada = true;
         firebase.database().ref("/proposals/" + demandid + "/" + proposalid).set(proposal).then(function(){
-            axios.get(apiurl + "/php/send.php",{
+            axios.get("http://admin.veryhorse.com/php/send.php",{
                 params:{
                     data:JSON.stringify({demand: demand.pickCity+" a "+demand.deliverCity, user:proposal.transportista}),
                     action:'send_offer_dismissed'
