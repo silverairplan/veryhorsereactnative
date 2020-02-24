@@ -3,11 +3,9 @@ import {Provider as StoreProvider} from 'react-redux';
 import Store from './store';
 import {StyleSheet, View, StatusBar, Platform} from 'react-native';
 import Splash from './components/Splash';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp,heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as firebase from 'firebase';
+
 
 const MyStatusBar = ({backgroundColor, ...props}) => (
   <View style={[styles.statusBar, {backgroundColor}]}>

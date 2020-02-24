@@ -209,6 +209,7 @@ export default {
 
     PRECIO4: 'Precio transporte según condiciones de contratación',
     PAGO: 'Pago efectuado',
+    PAGO: 'Pago efectuado',
     PAGO2: 'Pago pendiente al transportista',
     DATOS: 'Datos transportista',
     DATOS2: 'Datos del Usuario',
