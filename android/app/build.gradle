@@ -132,8 +132,8 @@ android {
         //applicationId "com.ionicframework.veryhorse402802"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10446
-        versionName "2.2.7"
+        versionCode 10453
+        versionName "2.3.1"
         multiDexEnabled true
     }
      signingConfigs {

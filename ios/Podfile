@@ -1,11 +1,11 @@
 platform :ios, '9.0'
-  pod 'PayPal-iOS-SDK'
+pod 'PayPal-iOS-SDK'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 target 'veryhorsereactnative' do
 	
   pod 'Stripe', '~> 14.0.0'
-
+  
   # Pods for veryhorsereactnative
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
@@ -43,18 +43,16 @@ target 'veryhorsereactnative' do
   pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
-
+    
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
 
-
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
-
-
-
+  
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
   pod 'react-native-version-number', :path => '../node_modules/react-native-version-number'
 
@@ -63,7 +61,14 @@ target 'veryhorsereactnative' do
     # Pods for testing
   end
 
-  use_native_modules!
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
 end
 
 target 'veryhorsereactnative-tvOS' do

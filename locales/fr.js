@@ -184,6 +184,7 @@ export default {
 	DATOS2: 'Données utilisateur',
 	EDAD: 'Âge',
 	REGISTRO_E: 'Enregistrement réussi',
+	UPDATE_E: 'Changement réussi',
 	NUMERO_E: 'Nombre d\'employés',
 	GRACIAS3: 'Merci de votre attention',
 	FECHA_E: 'Date de livraison',

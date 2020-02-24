@@ -57,6 +57,7 @@ export default {
 	COTIZACION: '(einschließlich Steuern)',
 	FECHA_A: 'Alternativer Zeitraum',
 	PROPUESTA5: 'Angebot geschickt',
+	UPDATE_E: 'Erfolgreiche Veränderung',
 	ATRAS: 'Zurück',
 	FECHA_R: 'Abholdatum',
 	ESCOJA: 'Wählen Sie die Datumsangabe, die am besten für Sie passt',

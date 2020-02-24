@@ -208,7 +208,7 @@ export default {
     PROPUESTA7: 'Su propuesta ha sido enviada exitosamente, si su oferta es aprobada se lo comunicaremos vía email. En el caso de ser desestimada desaparecerá automáticamente de su lista de demandas de traslado.',
 
     PRECIO4: 'Precio transporte según condiciones de contratación',
-    PAGO: 'Pago efectuado', 
+    PAGO: 'Pago efectuado',
     PAGO2: 'Pago pendiente al transportista',
     DATOS: 'Datos transportista',
     DATOS2: 'Datos del Usuario',
@@ -216,6 +216,7 @@ export default {
     EDAD: 'Edad',
     ATRAS: 'Atrás',
     REGISTRO_E: 'Registro exitoso',
+    UPDATE_E: 'Cambio exitoso',
 
     NUMERO_E: 'Número de empleados',
     GRACIAS3: 'Gracias por su atención',

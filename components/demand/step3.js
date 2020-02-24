@@ -37,9 +37,11 @@ class Step3 extends React.Component
                 </View>
                 <View style={style.formgroup}>
                     <Text style={style.label}>{this.props.mode == 'between'?intlData.messages['ENTRE']:intlData.messages['EL_DIA']} *:</Text>
-                    <DatePicker 
-                        mode="date" 
-                        style={style.dateInput} 
+                    <DatePicker
+                        confirmBtnText={intlData.messages['CONFIRMAR4']}
+                        cancelBtnText={intlData.messages['CANCELAR']}
+                        mode="date"
+                        style={style.dateInput}
                         showIcon={false}
                         format="YYYY-MM-DD"
                         minDate={Moment(new Date()).format('YYYY-MM-DD')}
@@ -52,9 +54,11 @@ class Step3 extends React.Component
                     this.props.mode == 'between' && (
                         <View style={style.formgroup}>
                             <Text style={style.label}>{intlData.messages['Y_EL']} *:</Text>
-                            <DatePicker 
-                                mode="date" 
-                                style={style.dateInput} 
+                            <DatePicker
+                                confirmBtnText={intlData.messages['CONFIRMAR4']}
+                                cancelBtnText={intlData.messages['CANCELAR']}
+                                mode="date"
+                                style={style.dateInput}
                                 showIcon={false}
                                 format="YYYY-MM-DD"
                                 minDate={this.props.data[this.props.param1]?this.props.data[this.props.param1]:Moment(new Date()).format('YYYY-MM-DD')}
@@ -80,7 +84,7 @@ const style = StyleSheet.create({
     },
     formgroup:{
         marginTop:hp('2%')
-    },  
+    },
     label:{
         fontSize:hp('2.2%'),
         color:'#605e00',

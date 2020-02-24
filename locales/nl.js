@@ -197,6 +197,7 @@ export default {
 	PAGO2: 'In afwachting van betaling aan de vervoerder',
 	DATOS: 'Informatie over de vervoerder',
 	DATOS2: 'Gebruikersgegevens',
+	UPDATE_E: 'Succesvolle verandering',
 	EDAD: 'Leeftijd',
 	REGISTRO_E: 'Succesvolle registratie',
 	NUMERO_E: 'Aantal werknemers',

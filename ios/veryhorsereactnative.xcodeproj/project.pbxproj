@@ -13,14 +13,14 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1F91C68C23EAED3600779A48 /* TPSStripe in Resources */ = {isa = PBXBuildFile; fileRef = 1F91C68923EAED3600779A48 /* TPSStripe */; };
-		2917F7D67E34EAA101BECDBB /* libPods-veryhorsereactnative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ACD6AA48E8428C49BE04F71 /* libPods-veryhorsereactnative.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* veryhorsereactnativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* veryhorsereactnativeTests.m */; };
-		59DE0F846EBEA92AA23E5785 /* libPods-veryhorsereactnativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB6F49A252161BF87BA173B1 /* libPods-veryhorsereactnativeTests.a */; };
-		67109149585E166190E8C297 /* libPods-veryhorsereactnative-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ABBD9CCE6DD5A88E4BC89C9 /* libPods-veryhorsereactnative-tvOSTests.a */; };
-		B9D443387BF93631FEE2C914 /* libPods-veryhorsereactnative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95EDCB53F030741D0DD3439C /* libPods-veryhorsereactnative-tvOS.a */; };
+		312B32220E265A6F459F8C21 /* libPods-veryhorsereactnative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEAE5B35BC9B6ABAB5C1041F /* libPods-veryhorsereactnative-tvOS.a */; };
+		34FF92FC496D8B4AEAB02D14 /* libPods-veryhorsereactnative-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E205CFA82A8648118CC6A626 /* libPods-veryhorsereactnative-tvOSTests.a */; };
+		DAF4BCCC22F1055A27EC5227 /* libPods-veryhorsereactnative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9E750BF127B3B761E32BB80 /* libPods-veryhorsereactnative.a */; };
+		F1A3AC542E8FB0886D6D673B /* libPods-veryhorsereactnativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E29E18767CC6B322E068C16 /* libPods-veryhorsereactnativeTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,13 +30,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = veryhorsereactnative;
-		};
-		1F91C67323EAE5EB00779A48 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8BA7ADCF1A684380BF6D10D8 /* RNPaypalWrapper.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNPaypalWrapper;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -53,8 +46,8 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* veryhorsereactnativeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = veryhorsereactnativeTests.m; sourceTree = "<group>"; };
 		034975A5C052425FAF48CE18 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		09092A0EDB9490A588FC7216 /* Pods-veryhorsereactnativeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnativeTests.debug.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnativeTests/Pods-veryhorsereactnativeTests.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* veryhorsereactnative.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = veryhorsereactnative.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F865D57288F1843372BCA53 /* Pods-veryhorsereactnative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative.debug.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative/Pods-veryhorsereactnative.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Very Horse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Very Horse.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = veryhorsereactnative/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = veryhorsereactnative/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -65,38 +58,46 @@
 		1F91C68D23EAEDE500779A48 /* libStripe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libStripe.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F91C68F23EAEDF500779A48 /* libtipsi-stripe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libtipsi-stripe.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F91C69123EAF24100779A48 /* libStripe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libStripe.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2C9D5E5E0EF4CB411A7637E1 /* Pods-veryhorsereactnative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative.debug.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative/Pods-veryhorsereactnative.debug.xcconfig"; sourceTree = "<group>"; };
+		1FD601F323F40D85005355E5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		1FD601F523F40D8A005355E5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		1FD601F723F40D8F005355E5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1FD601F923F40D94005355E5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1FD601FB23F40D9A005355E5 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		1FD601FD23F40D9E005355E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		1FD601FF23F40DA2005355E5 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		1FD6020123F40DA6005355E5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1FD6020323F40DAB005355E5 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		2D02E47B1E0B4A5D006451C7 /* veryhorsereactnative-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "veryhorsereactnative-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* veryhorsereactnative-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "veryhorsereactnative-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3120D63600EE4967BCA4AD27 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		31C87F29634C4F33B37D8CF7 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		3ACD6AA48E8428C49BE04F71 /* libPods-veryhorsereactnative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-veryhorsereactnative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4747F2DDC892EDAB13E62A6E /* Pods-veryhorsereactnative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative.release.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative/Pods-veryhorsereactnative.release.xcconfig"; sourceTree = "<group>"; };
-		4ABBD9CCE6DD5A88E4BC89C9 /* libPods-veryhorsereactnative-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-veryhorsereactnative-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		349DB7632C2036618C60A5E6 /* Pods-veryhorsereactnative-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative-tvOSTests/Pods-veryhorsereactnative-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3A9990EBC6676703DAE8A24F /* Pods-veryhorsereactnativeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnativeTests.debug.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnativeTests/Pods-veryhorsereactnativeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3E29E18767CC6B322E068C16 /* libPods-veryhorsereactnativeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-veryhorsereactnativeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5199465072E74CF08DDE3615 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		5AAF20588EFF89B00FA1C401 /* Pods-veryhorsereactnative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative.release.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative/Pods-veryhorsereactnative.release.xcconfig"; sourceTree = "<group>"; };
 		650D84C8C3B6461E8B404197 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		68B6D8395ADD4FDEAE5A3AFA /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		6A6FD95459CE4C98AF88216D /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		6BC2AC5EC4F84DF68A8F9D61 /* Pods-veryhorsereactnative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative-tvOS/Pods-veryhorsereactnative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		6D33714819C9480D93549C54 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		736F2ABA56F4421C8F5C4D9A /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		786377393C42A7C7E3C615E0 /* Pods-veryhorsereactnative-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative-tvOSTests/Pods-veryhorsereactnative-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		7F0F2D60BA4944A6A2292DC0 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		81FFAF2C0ACB465EAE175345 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		8BA7ADCF1A684380BF6D10D8 /* RNPaypalWrapper.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNPaypalWrapper.xcodeproj; path = "../node_modules/react-native-paypal-wrapper/ios/RNPaypalWrapper.xcodeproj"; sourceTree = "<group>"; };
-		95EDCB53F030741D0DD3439C /* libPods-veryhorsereactnative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-veryhorsereactnative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9DE85841D7CC5C06381CFAF0 /* Pods-veryhorsereactnative-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative-tvOSTests/Pods-veryhorsereactnative-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9E0D0752BAFB44FA96DF1ACC /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		AEAE5B35BC9B6ABAB5C1041F /* libPods-veryhorsereactnative-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-veryhorsereactnative-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B309F6F2A8204CBAAC99ED21 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		B87705C0DDD67AD94BA2579A /* Pods-veryhorsereactnativeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnativeTests.release.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnativeTests/Pods-veryhorsereactnativeTests.release.xcconfig"; sourceTree = "<group>"; };
+		B9E750BF127B3B761E32BB80 /* libPods-veryhorsereactnative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-veryhorsereactnative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAE2A7A5DAAB416091910C46 /* libStripeNative.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libStripeNative.a; sourceTree = "<group>"; };
-		BB6F49A252161BF87BA173B1 /* libPods-veryhorsereactnativeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-veryhorsereactnativeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD5E2B0C014740118D6A5D33 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		C2B502A8BE88427ABDD9CC93 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		DD332877B12EA36D44E9CBD3 /* Pods-veryhorsereactnative-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative-tvOS/Pods-veryhorsereactnative-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		E1E7D99594C6EFF391E7FAE0 /* Pods-veryhorsereactnative-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative-tvOSTests/Pods-veryhorsereactnative-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		DD1B803B494F8AB3138055F8 /* Pods-veryhorsereactnative-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative-tvOS/Pods-veryhorsereactnative-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		E205CFA82A8648118CC6A626 /* libPods-veryhorsereactnative-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-veryhorsereactnative-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC9C46276DAF44C087FFF392 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		F0E082CFFCEEC89960E94685 /* Pods-veryhorsereactnative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnative-tvOS/Pods-veryhorsereactnative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		F2DE4C99732950AA307FE783 /* Pods-veryhorsereactnativeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-veryhorsereactnativeTests.release.xcconfig"; path = "Target Support Files/Pods-veryhorsereactnativeTests/Pods-veryhorsereactnativeTests.release.xcconfig"; sourceTree = "<group>"; };
 		F36153BAE87A48919A30F4ED /* libRNPaypalWrapper.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNPaypalWrapper.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59DE0F846EBEA92AA23E5785 /* libPods-veryhorsereactnativeTests.a in Frameworks */,
+				F1A3AC542E8FB0886D6D673B /* libPods-veryhorsereactnativeTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,7 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2917F7D67E34EAA101BECDBB /* libPods-veryhorsereactnative.a in Frameworks */,
+				DAF4BCCC22F1055A27EC5227 /* libPods-veryhorsereactnative.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9D443387BF93631FEE2C914 /* libPods-veryhorsereactnative-tvOS.a in Frameworks */,
+				312B32220E265A6F459F8C21 /* libPods-veryhorsereactnative-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67109149585E166190E8C297 /* libPods-veryhorsereactnative-tvOSTests.a in Frameworks */,
+				34FF92FC496D8B4AEAB02D14 /* libPods-veryhorsereactnative-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,26 +178,27 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		1F91C67023EAE4B500779A48 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1F91C67423EAE5EB00779A48 /* libRNPaypalWrapper.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FD6020323F40DAB005355E5 /* SafariServices.framework */,
+				1FD6020123F40DA6005355E5 /* SystemConfiguration.framework */,
+				1FD601FF23F40DA2005355E5 /* MobileCoreServices.framework */,
+				1FD601FD23F40D9E005355E5 /* MessageUI.framework */,
+				1FD601FB23F40D9A005355E5 /* CoreMedia.framework */,
+				1FD601F923F40D94005355E5 /* CoreLocation.framework */,
+				1FD601F723F40D8F005355E5 /* AVFoundation.framework */,
+				1FD601F523F40D8A005355E5 /* AudioToolbox.framework */,
+				1FD601F323F40D85005355E5 /* Accelerate.framework */,
 				1F91C69123EAF24100779A48 /* libStripe.a */,
 				1F91C68F23EAEDF500779A48 /* libtipsi-stripe.a */,
 				1F91C68D23EAEDE500779A48 /* libStripe.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				3ACD6AA48E8428C49BE04F71 /* libPods-veryhorsereactnative.a */,
-				95EDCB53F030741D0DD3439C /* libPods-veryhorsereactnative-tvOS.a */,
-				4ABBD9CCE6DD5A88E4BC89C9 /* libPods-veryhorsereactnative-tvOSTests.a */,
-				BB6F49A252161BF87BA173B1 /* libPods-veryhorsereactnativeTests.a */,
+				B9E750BF127B3B761E32BB80 /* libPods-veryhorsereactnative.a */,
+				AEAE5B35BC9B6ABAB5C1041F /* libPods-veryhorsereactnative-tvOS.a */,
+				E205CFA82A8648118CC6A626 /* libPods-veryhorsereactnative-tvOSTests.a */,
+				3E29E18767CC6B322E068C16 /* libPods-veryhorsereactnativeTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -204,14 +206,14 @@
 		7142AB6F8FED4932D890AA62 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2C9D5E5E0EF4CB411A7637E1 /* Pods-veryhorsereactnative.debug.xcconfig */,
-				4747F2DDC892EDAB13E62A6E /* Pods-veryhorsereactnative.release.xcconfig */,
-				DD332877B12EA36D44E9CBD3 /* Pods-veryhorsereactnative-tvOS.debug.xcconfig */,
-				F0E082CFFCEEC89960E94685 /* Pods-veryhorsereactnative-tvOS.release.xcconfig */,
-				9DE85841D7CC5C06381CFAF0 /* Pods-veryhorsereactnative-tvOSTests.debug.xcconfig */,
-				E1E7D99594C6EFF391E7FAE0 /* Pods-veryhorsereactnative-tvOSTests.release.xcconfig */,
-				09092A0EDB9490A588FC7216 /* Pods-veryhorsereactnativeTests.debug.xcconfig */,
-				B87705C0DDD67AD94BA2579A /* Pods-veryhorsereactnativeTests.release.xcconfig */,
+				0F865D57288F1843372BCA53 /* Pods-veryhorsereactnative.debug.xcconfig */,
+				5AAF20588EFF89B00FA1C401 /* Pods-veryhorsereactnative.release.xcconfig */,
+				DD1B803B494F8AB3138055F8 /* Pods-veryhorsereactnative-tvOS.debug.xcconfig */,
+				6BC2AC5EC4F84DF68A8F9D61 /* Pods-veryhorsereactnative-tvOS.release.xcconfig */,
+				349DB7632C2036618C60A5E6 /* Pods-veryhorsereactnative-tvOSTests.debug.xcconfig */,
+				786377393C42A7C7E3C615E0 /* Pods-veryhorsereactnative-tvOSTests.release.xcconfig */,
+				3A9990EBC6676703DAE8A24F /* Pods-veryhorsereactnativeTests.debug.xcconfig */,
+				F2DE4C99732950AA307FE783 /* Pods-veryhorsereactnativeTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -219,7 +221,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				8BA7ADCF1A684380BF6D10D8 /* RNPaypalWrapper.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -244,7 +245,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* veryhorsereactnative.app */,
+				13B07F961A680F5B00A75B9A /* Very Horse.app */,
 				00E356EE1AD99517003FC87E /* veryhorsereactnativeTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* veryhorsereactnative-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* veryhorsereactnative-tvOSTests.xctest */,
@@ -282,7 +283,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "veryhorsereactnativeTests" */;
 			buildPhases = (
-				539D53B63764CCA3E24C65F9 /* [CP] Check Pods Manifest.lock */,
+				CAD1F56F5344CBAED1EC64BD /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -301,13 +302,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "veryhorsereactnative" */;
 			buildPhases = (
-				D22B9716F629A0AB25594404 /* [CP] Check Pods Manifest.lock */,
+				86D519C550BCB94AEC6787FC /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				5D7CC2846BEED84F80769F33 /* [CP] Copy Pods Resources */,
+				99D070AB11518A01C890ECB8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -315,14 +316,14 @@
 			);
 			name = veryhorsereactnative;
 			productName = veryhorsereactnative;
-			productReference = 13B07F961A680F5B00A75B9A /* veryhorsereactnative.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Very Horse.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* veryhorsereactnative-tvOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "veryhorsereactnative-tvOS" */;
 			buildPhases = (
-				4D62C5E3EDA869235D69D446 /* [CP] Check Pods Manifest.lock */,
+				D5002F7EF899563708BD591E /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -342,7 +343,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "veryhorsereactnative-tvOSTests" */;
 			buildPhases = (
-				7BF335762FB735E85C70A693 /* [CP] Check Pods Manifest.lock */,
+				F3E12DEC5C6F1E2558140D73 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -370,6 +371,10 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 2PRL3M54RF;
+						ProvisioningStyle = Automatic;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -393,12 +398,6 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 1F91C67023EAE4B500779A48 /* Products */;
-					ProjectRef = 8BA7ADCF1A684380BF6D10D8 /* RNPaypalWrapper.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* veryhorsereactnative */,
@@ -408,16 +407,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		1F91C67423EAE5EB00779A48 /* libRNPaypalWrapper.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNPaypalWrapper.a;
-			remoteRef = 1F91C67323EAE5EB00779A48 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -483,7 +472,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		4D62C5E3EDA869235D69D446 /* [CP] Check Pods Manifest.lock */ = {
+		86D519C550BCB94AEC6787FC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -498,36 +487,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-veryhorsereactnative-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-veryhorsereactnative-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		539D53B63764CCA3E24C65F9 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-veryhorsereactnativeTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5D7CC2846BEED84F80769F33 /* [CP] Copy Pods Resources */ = {
+		99D070AB11518A01C890ECB8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -577,7 +544,51 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-veryhorsereactnative/Pods-veryhorsereactnative-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7BF335762FB735E85C70A693 /* [CP] Check Pods Manifest.lock */ = {
+		CAD1F56F5344CBAED1EC64BD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-veryhorsereactnativeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D5002F7EF899563708BD591E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-veryhorsereactnative-tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F3E12DEC5C6F1E2558140D73 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -593,28 +604,6 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-veryhorsereactnative-tvOSTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D22B9716F629A0AB25594404 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-veryhorsereactnative-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -726,7 +715,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09092A0EDB9490A588FC7216 /* Pods-veryhorsereactnativeTests.debug.xcconfig */;
+			baseConfigurationReference = 3A9990EBC6676703DAE8A24F /* Pods-veryhorsereactnativeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -737,6 +726,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/..",
 					"$(SRCROOT)/..",
+					"$(SRCROOT)/../node_modules/react-native-paypal-wrapper/ios/**",
 				);
 				INFOPLIST_FILE = veryhorsereactnativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -759,7 +749,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B87705C0DDD67AD94BA2579A /* Pods-veryhorsereactnativeTests.release.xcconfig */;
+			baseConfigurationReference = F2DE4C99732950AA307FE783 /* Pods-veryhorsereactnativeTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -767,6 +757,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/..",
 					"$(SRCROOT)/..",
+					"$(SRCROOT)/../node_modules/react-native-paypal-wrapper/ios/**",
 				);
 				INFOPLIST_FILE = veryhorsereactnativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -789,56 +780,84 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C9D5E5E0EF4CB411A7637E1 /* Pods-veryhorsereactnative.debug.xcconfig */;
+			baseConfigurationReference = 0F865D57288F1843372BCA53 /* Pods-veryhorsereactnative.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 1;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_MODULES_AUTOLINK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 2PRL3M54RF;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/..",
 					"$(SRCROOT)/..",
+					"$(SRCROOT)/../node_modules/react-native-paypal-wrapper/ios",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
 				INFOPLIST_FILE = veryhorsereactnative/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PayPalMobile",
+				);
+				MARKETING_VERSION = 2.3.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-ObjC",
 					"-lc++",
+					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = veryhorsereactnative;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ionicframework.veryhorse402802;
+				PRODUCT_NAME = "Very Horse";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4747F2DDC892EDAB13E62A6E /* Pods-veryhorsereactnative.release.xcconfig */;
+			baseConfigurationReference = 5AAF20588EFF89B00FA1C401 /* Pods-veryhorsereactnative.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 1;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_MODULES_AUTOLINK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 2PRL3M54RF;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/..",
 					"$(SRCROOT)/..",
+					"$(SRCROOT)/../node_modules/react-native-paypal-wrapper/ios",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
 				);
 				INFOPLIST_FILE = veryhorsereactnative/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PayPalMobile",
+				);
+				MARKETING_VERSION = 2.3.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-ObjC",
 					"-lc++",
+					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = veryhorsereactnative;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ionicframework.veryhorse402802;
+				PRODUCT_NAME = "Very Horse";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD332877B12EA36D44E9CBD3 /* Pods-veryhorsereactnative-tvOS.debug.xcconfig */;
+			baseConfigurationReference = DD1B803B494F8AB3138055F8 /* Pods-veryhorsereactnative-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -853,6 +872,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/..",
 					"$(SRCROOT)/..",
+					"$(SRCROOT)/../node_modules/react-native-paypal-wrapper/ios/**",
 				);
 				INFOPLIST_FILE = "veryhorsereactnative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -876,7 +896,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F0E082CFFCEEC89960E94685 /* Pods-veryhorsereactnative-tvOS.release.xcconfig */;
+			baseConfigurationReference = 6BC2AC5EC4F84DF68A8F9D61 /* Pods-veryhorsereactnative-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -891,6 +911,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/..",
 					"$(SRCROOT)/..",
+					"$(SRCROOT)/../node_modules/react-native-paypal-wrapper/ios/**",
 				);
 				INFOPLIST_FILE = "veryhorsereactnative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -914,7 +935,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9DE85841D7CC5C06381CFAF0 /* Pods-veryhorsereactnative-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 349DB7632C2036618C60A5E6 /* Pods-veryhorsereactnative-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -928,6 +949,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/..",
 					"$(SRCROOT)/..",
+					"$(SRCROOT)/../node_modules/react-native-paypal-wrapper/ios/**",
 				);
 				INFOPLIST_FILE = "veryhorsereactnative-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -951,7 +973,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E1E7D99594C6EFF391E7FAE0 /* Pods-veryhorsereactnative-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 786377393C42A7C7E3C615E0 /* Pods-veryhorsereactnative-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -965,6 +987,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/..",
 					"$(SRCROOT)/..",
+					"$(SRCROOT)/../node_modules/react-native-paypal-wrapper/ios/**",
 				);
 				INFOPLIST_FILE = "veryhorsereactnative-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
